@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Icon from '../../../../atoms/icon';
 
 const Navigation = () => {
@@ -38,6 +38,24 @@ const Navigation = () => {
           icon: 'event',
           text: 'Quản lý sự kiện',
           link: '/admin/event-manager',
+        },
+      ],
+    },
+    {
+      value: 3,
+      label: 'Khác',
+      list: [
+        {
+          value: 0,
+          icon: 'major',
+          text: 'Quản lý chuyên ngành',
+          link: '/admin/major-manager',
+        },
+        {
+          value: 1,
+          icon: 'slide',
+          text: 'Quản lý slide',
+          link: '',
         },
       ],
     },

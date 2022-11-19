@@ -23,7 +23,7 @@ const Item = ({ isChecked, onCheck, value }: props) => {
           className="w-[50px] h-[50px] object-cover m-[0_16px_0_0]"
         />
         <div>
-          <div className="font-[16px] font-[700] text-[#333333] ">Hồ minh Hải</div>
+          <div className="text-[16px] font-[700] text-[#333333] ">Hồ minh Hải</div>
           <div className="flex gap-[8px] m-[4px_0_0_0]">
             <p className="m-0 text-[#9F9F9F] text-[12px] font-[400]">Đăng bởi:</p>
             <p className="m-0 text-[#9F9F9F] text-[12px] font-[700]">Hồ Minh Hải</p>
@@ -31,7 +31,7 @@ const Item = ({ isChecked, onCheck, value }: props) => {
         </div>
       </div>
       <div className="text-right">
-        <div className="text-[#00aded] font-[700] font-[16px] leading-[18px]">Thế giới</div>
+        <div className="text-[#00aded] font-[700] text-[16px] leading-[18px]">Thế giới</div>
         <div className="flex gap-[8px] m-[4px_0_0_0]">
           <p className="m-0 text-[#9F9F9F] text-[12px] font-[400]">Đăng lúc:</p>
           <p className="m-0 text-[#9F9F9F] text-[12px] font-[700]">12/02/22022</p>

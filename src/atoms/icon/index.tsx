@@ -9,6 +9,10 @@ import { ReactComponent as news } from './svg/new.svg';
 import { ReactComponent as event } from './svg/event.svg';
 import { ReactComponent as unChecked } from './svg/unChecked.svg';
 import { ReactComponent as checked } from './svg/checked.svg';
+import { ReactComponent as major } from './svg/major.svg';
+import { ReactComponent as slide } from './svg/slide.svg';
+import { ReactComponent as time } from './svg/time.svg';
+import { ReactComponent as home } from './svg/home.svg';
 
 interface iconProps {
   name: string;
@@ -28,6 +32,10 @@ const icons: any = {
   event: event,
   unChecked: unChecked,
   checked: checked,
+  major: major,
+  slide: slide,
+  time: time,
+  home: home,
 };
 
 const Icon = ({ name, width = 20, height = width, className }: iconProps) => {

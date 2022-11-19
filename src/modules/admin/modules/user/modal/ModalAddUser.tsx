@@ -1,30 +1,32 @@
-import {
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select,
-  TreeSelect,
-  Upload,
-} from 'antd';
+import { Form, Input, Modal, Select, Upload } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 
 interface props {
   isOpen: boolean;
   handleCancel: () => void;
-  handleOk: () => void;
+  onSave: (form: any) => void;
+  listMajors: any;
 }
 
-const ModalAddUser = ({ isOpen, handleOk, handleCancel }: props) => {
-  const { RangePicker } = DatePicker;
-  const handleAddMember = () => Function;
+const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
+  const [form] = Form.useForm();
+
   return (
-    <Modal title="Thêm thành viên" open={isOpen} onOk={handleOk} onCancel={handleCancel}>
-      <Form labelCol={{ span: 6 }} wrapperCol={{ span: 14 }} labelAlign="left">
-        <Form.Item label="Họ và tên">
+    <Modal
+      title="Thêm thành viên"
+      open={isOpen}
+      onOk={() => {
+        onSave(form);
+      }}
+      onCancel={handleCancel}
+    >
+      <Form labelCol={{ span: 6 }} wrapperCol={{ span: 14 }} labelAlign="left" form={form}>
+        <Form.Item
+          label="Họ và tên"
+          name="fullName"
+          rules={[{ required: true, message: 'Không được để trống' }]}
+        >
           <Input />
         </Form.Item>
         <Form.Item
@@ -42,25 +44,24 @@ const ModalAddUser = ({ isOpen, handleOk, handleCancel }: props) => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item label="Số điện thoại">
+        <Form.Item label="Số điện thoại" name="phone">
           <Input />
         </Form.Item>
-        <Form.Item label="Địa chỉ">
+        <Form.Item label="Tuổi" name="age">
           <Input />
         </Form.Item>
-        <Form.Item label="Ngành học">
+        <Form.Item label="Ngành học" name="major">
           <Select>
-            <Select.Option value="0">Khoa học máy tính</Select.Option>
-            <Select.Option value="1">Kỹ thuật phần mềm</Select.Option>
-            <Select.Option value="2">Hệ thống thông tin</Select.Option>
-            <Select.Option value="3">Công nghệ thông tin</Select.Option>
+            {listMajors.current.map((item: any) => (
+              <Select.Option value={item.id}>{item.name}</Select.Option>
+            ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Vai trò">
+        <Form.Item label="Vai trò" name="role">
           <Select>
-            <Select.Option value="0">Admin</Select.Option>
-            <Select.Option value="1">Cán bộ</Select.Option>
-            <Select.Option value="2">Sinh viên</Select.Option>
+            <Select.Option value="r1">Admin</Select.Option>
+            <Select.Option value="r2">Cán bộ</Select.Option>
+            <Select.Option value="r3">Sinh viên</Select.Option>
           </Select>
         </Form.Item>
 
