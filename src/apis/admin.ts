@@ -1,22 +1,46 @@
 import axios from 'axios';
 
-export const getAllUserApprove = () => axios.get('http://127.0.0.1:8000/api/users');
+const END_POINT = 'http://127.0.0.1:8000/api';
 
-export const removeUser = (param: any) => axios.delete(`http://127.0.0.1:8000/api/users/${param}`);
+export const getAllUserApprove = () => axios.get(`${END_POINT}/users`);
 
-export const getAllUserPending = () => axios.get('http://127.0.0.1:8000/api/users/waiting');
+export const removeUser = (param: any) => axios.delete(`${END_POINT}/users/${param}`);
 
-export const addUser = (param: any) => axios.post('http://127.0.0.1:8000/api/users', param);
+export const getAllUserPending = () => axios.get(`${END_POINT}/users/waiting`);
 
-export const editUser = (param: any, id: any) =>
-  axios.put(`http://127.0.0.1:8000/api/users/${id}`, param);
+export const addUser = (param: any) => axios.post(`${END_POINT}/users`, param);
 
-export const getAllMajor = () => axios.get('http://127.0.0.1:8000/api/majors');
+export const editUser = (param: any, id: any) => axios.put(`${END_POINT}/users/${id}`, param);
 
-export const addMajor = (param: any) => axios.post('http://127.0.0.1:8000/api/majors', param);
+export const getAllMajor = () => axios.get(`${END_POINT}/majors`);
 
-export const deleteMajor = (param: any) =>
-  axios.delete(`http://127.0.0.1:8000/api/majors/${param}`);
+export const addMajor = (param: any) => axios.post(`${END_POINT}/majors`, param);
 
-export const editMajor = (param: any, id: any) =>
-  axios.put(`http://127.0.0.1:8000/api/majors/${id}`, param);
+export const deleteMajor = (param: any) => axios.delete(`${END_POINT}/majors/${param}`);
+
+export const editMajor = (param: any, id: any) => axios.put(`${END_POINT}/majors/${id}`, param);
+
+export const categoryApis = {
+  findAll: (params = {}) => axios.get(`${END_POINT}/categories`, { params }),
+  create: (body: any) => axios.post(`${END_POINT}/categories`, body),
+  update: (body: any, id: number) => axios.put(`${END_POINT}/categories/${id}`, body),
+  remove: (id: number) => axios.delete(`${END_POINT}/categories/${id}`),
+};
+
+export const postApis = {
+  findAll: (params = {}) => axios.get(`${END_POINT}/posts`, { params }),
+  findOne: (id: number) => axios.get(`${END_POINT}/posts/${id}`),
+  create: (body: any) =>
+    axios.post(`${END_POINT}/posts`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
+  update: (body: any, id: number) =>
+    axios.post(`${END_POINT}/posts/${id}`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
+  remove: (id: number) => axios.delete(`${END_POINT}/posts/${id}`),
+};
