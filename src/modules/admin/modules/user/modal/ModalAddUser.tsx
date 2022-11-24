@@ -5,7 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 interface props {
   isOpen: boolean;
   handleCancel: () => void;
-  onSave: (form: any) => void;
+  onSave: (formData: any, form: any) => void;
   listMajors: any;
 }
 
@@ -17,7 +17,13 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
       title="Thêm thành viên"
       open={isOpen}
       onOk={() => {
-        onSave(form);
+        const formData = new FormData();
+        for (const key in form.getFieldsValue()) {
+          if (key === 'avatar')
+            formData.append(key, form.getFieldsValue()[key].fileList[0].originFileObj);
+          else formData.append(key, form.getFieldsValue()[key]);
+        }
+        onSave(formData, form);
       }}
       onCancel={handleCancel}
     >
@@ -65,8 +71,8 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Upload" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
+        <Form.Item label="Avatar" name="avatar">
+          <Upload listType="picture-card">
             <div>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Upload</div>

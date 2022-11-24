@@ -8,7 +8,12 @@ export const removeUser = (param: any) => axios.delete(`${END_POINT}/users/${par
 
 export const getAllUserPending = () => axios.get(`${END_POINT}/users/waiting`);
 
-export const addUser = (param: any) => axios.post(`${END_POINT}/users`, param);
+export const addUser = (param: any) =>
+  axios.post(`${END_POINT}/users`, param, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
 export const editUser = (param: any, id: any) => axios.put(`${END_POINT}/users/${id}`, param);
 

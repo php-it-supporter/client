@@ -3,6 +3,7 @@ import { Form, Input, Modal, Select, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { roleUser } from '../../../constant/roleUser';
+import { setAvatar } from 'src/common/utils';
 
 interface props {
   isOpen: boolean;
@@ -31,7 +32,7 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
       <div className="flex justify-between bg-white items-center p-[12px] border border-solid border-[#CAD8E6] rounded-[4px] mb-[16px] px-[16px]">
         <div className="flex items-center">
           <img
-            src="https://vcdn1-giaitri.vnecdn.net/2022/08/25/Avatar-213-8923-1661403266.png?w=0&h=0&q=100&dpr=2&fit=crop&s=KWo2kCkyQr5Xxia52ObvvA"
+            src={setAvatar(user?.avatar)}
             alt=""
             className="h-[60px] w-[60px] rounded-full mr-[12px] object-cover"
           />

@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import { addMajor, deleteMajor, editMajor, getAllMajor } from '../../../../apis/admin';
 import { toast } from 'react-toastify';
-import { replace, searchMember } from '../../../../common/utils';
+import { replace, searchMember } from 'src/common/utils';
 
 interface DataType {
   id: React.Key;

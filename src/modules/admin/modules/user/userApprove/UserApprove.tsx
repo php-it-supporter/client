@@ -8,6 +8,7 @@ import { Button, Input, Modal, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { replace, searchMember, setAvatar } from 'src/common/utils';
 import {
   addUser,
   editUser,
@@ -15,8 +16,6 @@ import {
   getAllUserApprove,
   removeUser,
 } from '../../../../../apis/admin';
-import avatar from '../../../../../atoms/images/anh nen.png';
-import { replace, searchMember } from '../../../../../common/utils';
 import LayoutFull from '../../../components/LayoutFull';
 import { roleUser } from '../../../constant/roleUser';
 import ModalAddUser from '../modal/ModalAddUser';
@@ -88,7 +87,11 @@ const UserApprove = () => {
         key: item.id,
         name: (
           <div className="flex items-center gap-[12px]">
-            <img src={avatar} alt="" className="w-[36px] h-[36px] rounded-full object-cover" />
+            <img
+              src={setAvatar(item.avatar)}
+              alt=""
+              className="w-[36px] h-[36px] rounded-full object-cover"
+            />
             <div>{item.fullName}</div>
           </div>
         ),
@@ -125,7 +128,7 @@ const UserApprove = () => {
     return data.filter((item: any) => searchMember(replace(item.fullName), replace(keyword)));
   };
 
-  const onSave = async (form: any) => {
+  const onSave = async (formData: any, form: any) => {
     if (
       !form.getFieldsValue().username ||
       !form.getFieldsValue().password ||
@@ -134,7 +137,7 @@ const UserApprove = () => {
       toast.error('Không được để trống tên tài khoản hoặc mật khẩu hoặc họ và tên');
     else {
       try {
-        const res = await addUser(form.getFieldsValue());
+        const res = await addUser(formData);
 
         if (res) {
           fetchDataUser();
@@ -152,7 +155,7 @@ const UserApprove = () => {
           });
         }
       } catch (error) {
-        toast.error(`${error}`);
+        toast.error('Tên tài khoản đã tồn tại');
       }
     }
   };

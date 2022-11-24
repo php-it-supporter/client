@@ -2,9 +2,9 @@ import { DeleteOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Button, Input, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
+import { replace, searchMember } from 'src/common/utils';
 import { getAllUserPending } from '../../../../../apis/admin';
 import avatar from '../../../../../atoms/images/anh nen.png';
-import { replace, searchMember } from '../../../../../common/utils';
 import LayoutFull from '../../../components/LayoutFull';
 import { getMajor } from '../../../constant/majorUser';
 

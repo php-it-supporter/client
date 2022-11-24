@@ -57,7 +57,12 @@ const NewManager = () => {
         </div>
         {postSelected !== 0 && (
           <div className="flex gap-[12px] items-center mx-[16px] my-[12px]">
-            <Button icon={<EyeOutlined />}>Xem</Button>
+            <Button
+              icon={<EyeOutlined />}
+              onClick={() => navigate(`/admin/new-detail?id=${postSelected}`)}
+            >
+              Xem
+            </Button>
             <Button
               icon={<EditOutlined />}
               onClick={() => navigate(`/admin/form-create?id=${postSelected}`)}

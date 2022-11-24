@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../../../../atoms/icon';
 import moment from 'moment';
+import { setAvatar } from 'src/common/utils';
 
 interface props {
   data: any;
@@ -20,7 +21,7 @@ const Item = ({ data, isChecked, onCheck, value }: props) => {
           {isChecked === value ? <Icon name="checked" /> : <Icon name="unChecked" />}
         </div>
         <img
-          src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1"
+          src={setAvatar(data.image)}
           alt=""
           className="w-[50px] h-[50px] object-cover m-[0_16px_0_0]"
         />
