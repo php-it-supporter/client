@@ -34,7 +34,9 @@ const Item = ({ data, isChecked, onCheck, value }: props) => {
         </div>
       </div>
       <div className="text-right">
-        <div className="text-[#00aded] font-[700] text-[16px] leading-[18px]">Thế giới</div>
+        <div className="text-[#00aded] font-[700] text-[16px] leading-[18px]">
+          {data.category.name}
+        </div>
         <div className="flex gap-[8px] m-[4px_0_0_0]">
           <p className="m-0 text-[#9F9F9F] text-[12px] font-[400]">Đăng lúc:</p>
           <p className="m-0 text-[#9F9F9F] text-[12px] font-[700]">
