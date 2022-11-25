@@ -5,15 +5,13 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
-import { getAllMajor } from '../../../../apis/admin';
+import { getAllMajor, register } from '../../../../apis/admin';
 import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
 
 const Register = () => {
-  const listMajors = useRef([]);
+  const [listMajors, setListMajors] = useState([]);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  console.log(fileList);
 
   const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -38,7 +36,7 @@ const Register = () => {
   const fetchAllMajors = async () => {
     try {
       const res = await getAllMajor();
-      if (res) listMajors.current = res.data.data;
+      if (res) setListMajors(res.data.data || []);
     } catch (error) {
       toast.error('Kết nối bị lỗi');
     }
@@ -48,17 +46,30 @@ const Register = () => {
     fetchAllMajors();
   }, []);
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const onFinish = async (values: any) => {
+    try {
+      const formData = new FormData();
+      if (fileList[0].originFileObj) formData.append('avatar', fileList[0].originFileObj);
+
+      Object.keys(values).forEach((item) => {
+        formData.append(item, values[item]);
+      });
+
+      await register(formData);
+      toast.success('Success');
+
+      // TODO: handle access token and redirect user
+    } catch (error: any) {
+      toast.error(error.response.data.message || 'Có lỗi xảy ra');
+    }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
   return (
     <div className="flex items-center w-[100vw] h-[100vh] relative">
       <div className="w-[50vw] flex flex-col items-center ">
-        <img src={logo} alt="" className="w-[200px] absolute top-[5vh]" />
+        <Link to="/" className="w-[200px] absolute top-[5vh]">
+          <img src={logo} alt="" className="w-[200px]" />
+        </Link>
         <div className="font-[700] text-[32px] text-[#33333] mb-[20px]">Đăng ký</div>
         <Form
           name="basic"
@@ -66,7 +77,6 @@ const Register = () => {
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
           className="w-[50%] px-[40px]"
         >
@@ -103,7 +113,7 @@ const Register = () => {
           </Form.Item>
           <Form.Item label="Ngành học" name="major" labelAlign="left">
             <Select>
-              {listMajors.current.map((item: any) => (
+              {listMajors?.map((item: any) => (
                 <Select.Option value={item.id}>{item.name}</Select.Option>
               ))}
             </Select>
