@@ -9,6 +9,8 @@ import { getAllMajor, register } from '../../../../apis/admin';
 import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
 
+const KHOA = ['k10', 'k11', 'k12', 'k13', 'k14', 'k15', 'k16', 'k17'];
+
 const Register = () => {
   const navigate = useNavigate();
 
@@ -110,8 +112,17 @@ const Register = () => {
           <Form.Item label="Số điện thoại" name="phone" labelAlign="left">
             <Input />
           </Form.Item>
-          <Form.Item label="Tuổi" name="age" labelAlign="left">
-            <Input />
+          <Form.Item
+            label="Tuổi"
+            name="age"
+            labelAlign="left"
+            rules={[{ required: true, message: 'Không được để trống!' }]}
+          >
+            <Select>
+              {KHOA?.map((item: any) => (
+                <Select.Option value={item}>{item}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item
             label="Ngành học"
