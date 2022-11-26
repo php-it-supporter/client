@@ -55,3 +55,9 @@ export const postApis = {
     }),
   remove: (id: number) => axios.delete(`${END_POINT}/posts/${id}`),
 };
+
+export const slideApis = {
+  findAll: (params = {}) => axios.get(`${END_POINT}/slides`, { params }),
+  create: (body: any) => axios.post(`${END_POINT}/slides`, body),
+  remove: (id: number) => axios.delete(`${END_POINT}/slides/${id}`),
+};
