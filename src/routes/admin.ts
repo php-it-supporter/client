@@ -5,6 +5,7 @@ import userPendingModule from '../modules/admin/modules/user/userPending';
 import NewDetailModule from 'src/modules/admin/modules/post/newsManager/newsDetail';
 import formCreateModule from '../modules/admin/modules/post/formCreate';
 import eventManagerModule from 'src/modules/admin/modules/post/eventsManager';
+import categoryManagerModule from 'src/modules/admin/modules/category';
 
 export const AdminRouter = [
   userPendingModule,
@@ -14,4 +15,5 @@ export const AdminRouter = [
   majorManagerModule,
   formCreateModule,
   NewDetailModule,
+  categoryManagerModule,
 ];

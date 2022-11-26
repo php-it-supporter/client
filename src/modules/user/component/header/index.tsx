@@ -24,19 +24,19 @@ const Header = () => {
     {
       value: 3,
       text: 'Thành viên',
-      link: '',
+      link: '/user',
     },
   ];
   return (
     <div className="relative">
       <img src={logo} alt="" className="w-[100%]" />
-      <div className="absolute top-0 right-[20%] flex gap-[10px] items-center mt-[5px] ">
-        <Avatar size="large" icon={<UserOutlined />} />
-        <Link to="/login" className="font-[700] text-[16px] text-[#663399]">
+      <div className="absolute top-0 right-[20%] flex gap-[10px] items-center xl:mt-[0.4vw] mt-[0.3vw] ">
+        <Avatar size="small" icon={<UserOutlined />} className="xl:block hidden" />
+        <Link to="/login" className="font-[700] text-[0.8vw] text-[#663399]">
           Đăng nhập
         </Link>
-        <span className="font-[700] text-[18px]">/</span>
-        <Link to="/register" className="font-[700] text-[16px] text-[#663399]">
+        <span className="font-[700] text-[0.8vw]">/</span>
+        <Link to="/register" className="font-[700] text-[0.8vw] text-[#663399]">
           Đăng ký
         </Link>
       </div>
@@ -50,6 +50,7 @@ const Header = () => {
           </Link>
           {listMenu.map((item) => (
             <Link
+              key={item.value}
               to={item.link}
               className="h-[50px] flex items-center px-[20px] text-[#ffffff] uppercase font-[500] text-[16px] cursor-pointer hover:bg-[#0b4492] border-r border-t-[0] border-b-0 border-l-0 border-solid border-[#ffffff] last:border-r-0"
             >

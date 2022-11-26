@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const END_POINT = 'http://127.0.0.1:8000/api';
+export const END_POINT = 'http://127.0.0.1:8000/api';
 
 export const getAllUserApprove = () => axios.get(`${END_POINT}/users`);
 

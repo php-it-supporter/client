@@ -10,8 +10,8 @@ interface Modules {
 
 const detailPageModules: Modules = {
   routeProps: {
-    key: '/:id',
-    path: '/:id',
+    key: '/news/:id',
+    path: '/news/:id',
   },
   component: DetailPage,
 };
