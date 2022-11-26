@@ -1,20 +1,19 @@
 import { Button, Form, Input } from 'antd';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { login } from 'src/apis/admin';
+import { login } from 'src/context/authContext/apiCall';
+import { AuthContext } from 'src/context/authContext/AuthContext';
 import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
 
 const Login = () => {
-  const onFinish = async (values: any) => {
-    try {
-      await login(values);
-      toast.success('Success');
+  const { user, dispatch } = useContext(AuthContext);
 
-      // TODO: handle access token and redirect user
-    } catch (error: any) {
-      toast.error(error.response.data.message || 'Có lỗi xảy ra');
-    }
+  //
+  console.log(user);
+
+  const onFinish = async (values: any) => {
+    login(values, dispatch);
   };
 
   return (

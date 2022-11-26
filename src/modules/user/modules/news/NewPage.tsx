@@ -2,15 +2,17 @@ import LayoutFullUser from '../../component/layout';
 import image1 from '../../../../atoms/images/312221646_771694890930297_6215795452150606467_n.png';
 import image2 from '../../../../atoms/images/309911559_766777848088668_7456215299439506121_n.png';
 import image3 from '../../../../atoms/images/292355658_1935330136857061_8603834351602225961_n.png';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { postApis } from 'src/apis/admin';
 import Icon from 'src/atoms/icon';
 import { Link } from 'react-router-dom';
 // import process from 'process';
+import { categoryApis } from 'src/apis/admin';
 
 const NewPage = () => {
   const [reload, setReload] = useState(true);
   const [posts, setPosts] = useState<any[]>([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     if (reload) {
@@ -22,23 +24,34 @@ const NewPage = () => {
       setReload(false);
     }
   }, [reload]);
+
+  useEffect(() => {
+    if (reload) {
+      (async () => {
+        const postRes = await categoryApis.findAll();
+        setCategories(postRes.data?.data || []);
+      })();
+    }
+  }, [reload]);
   return (
     <LayoutFullUser>
       <div className="flex">
         <div className="w-[calc(20%-100px)] sticky top-[10px] ml-[50px] mr-[20px] my-[20px] bg-white shadow-sm rounded-sm p-4 h-[500px]">
           <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Thể loại</h3>
           <div className="space-y-2">
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Beauti</span>
-              <p className="ml-auto font-normal">(12)</p>
-            </a>
-            <a
+            {categories.map((item: any) => (
+              <a
+                href="#"
+                className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
+              >
+                <span className="mr-2">
+                  <i className="far fa-folder-open"></i>
+                </span>
+                <span>{item.name}</span>
+                <p className="ml-auto font-normal">{item.posts.length}</p>
+              </a>
+            ))}
+            {/* <a
               href="#"
               className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
             >
@@ -127,7 +140,7 @@ const NewPage = () => {
               </span>
               <span>Technology</span>
               <p className="ml-auto font-normal">(17)</p>
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="my-[20px] flex-1">
