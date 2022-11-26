@@ -30,14 +30,14 @@ const News = ({ posts }: props) => {
         </Link>
       </div>
       <div className="rounded-sm overflow-hidden bg-white shadow-sm mt-[20px] ">
-        <Link to={`/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
+        <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
           <img
             src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
             className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
           />
         </Link>
         <div className="p-4 pb-5">
-          <Link to={`/${posts[0]?.id}`}>
+          <Link to={`/news/${posts[0]?.id}`}>
             <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
               {posts[0]?.title}
             </h2>
@@ -77,7 +77,7 @@ const News = ({ posts }: props) => {
       <div>
         <div className="grid grid-cols-4 gap-4 mt-4">
           {posts.map((item: any, index: number) => {
-            if (index > 0 && index < 4)
+            if (index > 0 && index < 5)
               return (
                 <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
                   <img
@@ -85,7 +85,7 @@ const News = ({ posts }: props) => {
                     className="w-full h-60 object-cover transform hover:scale-110 transition duration-500 rounded-[4px]"
                   />
                   <div className="mt-3">
-                    <Link to={`/${item.id}`}>
+                    <Link to={`/news/${item.id}`}>
                       <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
                         {item?.title}
                       </h2>

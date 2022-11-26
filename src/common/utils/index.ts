@@ -1,7 +1,7 @@
 import avatarDefault from '../../atoms/images/default-avatar.png';
 
 export const setAvatar = (avatar: string) => {
-  if (avatar) return `${process.env.REACT_APP_DOMAIN}/${avatar}`;
+  if (avatar && avatar !== 'undefined') return `${process.env.REACT_APP_DOMAIN}/${avatar}`;
   return avatarDefault;
 };
 

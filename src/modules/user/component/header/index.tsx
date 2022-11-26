@@ -58,7 +58,7 @@ const Header = () => {
     {
       value: 2,
       text: 'Sự kiện',
-      link: '',
+      link: '/events',
       display: true,
     },
     {

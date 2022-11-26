@@ -56,14 +56,14 @@ const NewPage = () => {
         </div>
         <div className="my-[20px] flex-1">
           <div className="rounded-sm overflow-hidden bg-white shadow-sm">
-            <Link to={`/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
+            <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
               <img
                 src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
                 className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
               />
             </Link>
             <div className="p-4 pb-5">
-              <Link to={`/${posts[0]?.id}`}>
+              <Link to={`/news/${posts[0]?.id}`}>
                 <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
                   {posts[0]?.title}
                 </h2>

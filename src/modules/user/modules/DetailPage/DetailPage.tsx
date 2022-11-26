@@ -86,18 +86,20 @@ export default function DetailPage() {
           </div>
         </div>
         <div className="flex bg-white px-3 py-2 justify-between items-center rounded-sm mt-8">
-          <h5 className="text-base uppercase font-semibold font-roboto">Related post</h5>
+          <h5 className="text-base uppercase font-semibold font-roboto">Tin Tức</h5>
           <Link
             to="/news"
             className="text-white py-1 px-3 rounded-sm uppercase text-sm bg-blue-500 border border-blue-500 hover:text-blue-500 hover:bg-transparent transition"
           >
-            see more
+            Xem thêm
           </Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
-          {listPosts.map(
-            (item) =>
-              item.id !== Number(id) && (
+          {listPosts.map((item) => {
+            let index = 0;
+            if (item.id !== Number(id)) {
+              index++;
+              return (
                 <div className="rounded-sm bg-white p-3 pb-5 shadow-sm">
                   <Link to={`/news/${item.id}`} className="block rounded-md overflow-hidden">
                     <img
@@ -123,8 +125,10 @@ export default function DetailPage() {
                     </div>
                   </div>
                 </div>
-              )
-          )}
+              );
+            }
+            if (index == 4) return;
+          })}
         </div>
       </div>
     </LayoutFullUser>

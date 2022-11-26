@@ -174,8 +174,15 @@ const UserApprove = () => {
       }
       return form.getFieldsValue();
     };
+    let newObj = formSubmit(form);
+    console.log({ newObj: newObj });
+    const formData = new FormData();
+    for (const key in newObj) {
+      if (key === 'avatar') formData.append(key, newObj[key]?.fileList[0]?.originFileObj);
+      else formData.append(key, newObj[key]);
+    }
     try {
-      const res = await editUser(formSubmit(form), id);
+      const res = await editUser(formData, id);
 
       if (res) {
         fetchDataUser();
@@ -193,6 +200,7 @@ const UserApprove = () => {
         });
       }
     } catch (error) {
+      console.log(error);
       toast.error('Sửa người dùng thất bại');
     }
   };

@@ -17,7 +17,7 @@ export const addUser = (param: any) =>
     },
   });
 
-export const editUser = (param: any, id: any) => axios.put(`${END_POINT}/users/${id}`, param);
+export const editUser = (param: any, id: any) => axios.post(`${END_POINT}/users/${id}`, param);
 
 export const getAllMajor = () => axios.get(`${END_POINT}/majors`);
 
