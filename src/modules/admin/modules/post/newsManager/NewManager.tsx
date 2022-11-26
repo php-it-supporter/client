@@ -6,13 +6,16 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { Button, Input, Modal } from 'antd';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { postApis } from 'src/apis/admin';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { valueRole } from 'src/modules/admin/constant/roleUser';
 import LayoutFull from '../../../components/LayoutFull';
 import Item from '../Item';
 
 const NewManager = () => {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [reload, setReload] = useState(true);
@@ -30,6 +33,8 @@ const NewManager = () => {
     }
   }, [reload]);
 
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
+
   const onChange = (e: number) => {
     setPostSelected(e);
   };
@@ -39,7 +44,7 @@ const NewManager = () => {
     setReload(true);
   };
 
-  return (
+  return isRoleValid() ? (
     <>
       <LayoutFull>
         <div className="mx-[16px] mt-[10px]">
@@ -99,6 +104,8 @@ const NewManager = () => {
         ))}
       </LayoutFull>
     </>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 

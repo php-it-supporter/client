@@ -1,5 +1,5 @@
 import { Button, Input, Tooltip, Modal, Table, Select, Upload, Form } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import LayoutFull from '../../components/LayoutFull';
 import {
@@ -17,6 +17,9 @@ import {
 } from '../../../../apis/admin';
 import { toast } from 'react-toastify';
 import { replace, searchMember } from 'src/common/utils';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { valueRole } from '../../constant/roleUser';
+import { Navigate } from 'react-router-dom';
 interface DataType {
   id: React.Key;
   name: React.ReactNode;
@@ -24,6 +27,7 @@ interface DataType {
 }
 
 const CategoryManager = () => {
+  const { user } = useContext(AuthContext);
   const { confirm } = Modal;
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -127,6 +131,8 @@ const CategoryManager = () => {
     }
   };
 
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
+
   const columns: ColumnsType<DataType> = [
     {
       title: 'STT',
@@ -184,7 +190,8 @@ const CategoryManager = () => {
       },
     },
   ];
-  return (
+
+  return isRoleValid() ? (
     <>
       <LayoutFull>
         <div className="mx-[16px] my-[8px]">
@@ -228,6 +235,8 @@ const CategoryManager = () => {
         </Form>
       </Modal>
     </>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 

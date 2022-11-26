@@ -20,7 +20,7 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
         const formData = new FormData();
         for (const key in form.getFieldsValue()) {
           if (key === 'avatar')
-            formData.append(key, form.getFieldsValue()[key].fileList[0].originFileObj);
+            formData.append(key, form.getFieldsValue()[key]?.fileList[0]?.originFileObj);
           else formData.append(key, form.getFieldsValue()[key]);
         }
         onSave(formData, form);

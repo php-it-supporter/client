@@ -8,6 +8,8 @@ export const removeUser = (param: any) => axios.delete(`${END_POINT}/users/${par
 
 export const getAllUserPending = () => axios.get(`${END_POINT}/users/waiting`);
 
+export const approveUser = (param: any) => axios.patch(`${END_POINT}/users/active/${param}`);
+
 export const addUser = (param: any) =>
   axios.post(`${END_POINT}/users`, param, {
     headers: {

@@ -29,9 +29,8 @@ export const fetchUser = async (userId: number, dispatch: any) => {
   }
 };
 
-export const login = async (body: any, dispatch: any) => {
+export const login = async (body: any, dispatch: any, cb: (user: any) => void) => {
   dispatch(loginStart());
-
   try {
     const { data } = await loginApi(body);
 
@@ -45,6 +44,7 @@ export const login = async (body: any, dispatch: any) => {
     );
 
     dispatch(loginSuccess(data?.data));
+    cb(data?.data);
     toast.success('Success');
   } catch (error: any) {
     dispatch(loginFailure());
@@ -52,19 +52,8 @@ export const login = async (body: any, dispatch: any) => {
   }
 };
 
-// export const logout = async (dispatch) => {
-//   try {
-//     // const { data } = await axiosClient.post(`${END_POINT}/logout`)
-
-//     dispatch(logoutAction());
-//     localStorage.removeItem(USER_KEY);
-
-//     // if (data?.message) {
-//     //   toast(data.message, { type: 'success' })
-//     // }
-//   } catch (error) {
-//     // if (error instanceof Error) {
-//     //   toast(error?.response?.data?.message || error?.message || 'Đăng xuất thất bại!', { type: 'error' })
-//     // }
-//   }
-// };
+export const logout = async (dispatch: any) => {
+  dispatch(logoutAction());
+  localStorage.removeItem(USER_KEY);
+  toast.success('Đăng xuất thành công');
+};

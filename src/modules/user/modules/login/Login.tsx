@@ -5,15 +5,21 @@ import { login } from 'src/context/authContext/apiCall';
 import { AuthContext } from 'src/context/authContext/AuthContext';
 import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { valueRole } from 'src/modules/admin/constant/roleUser';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const { user, dispatch } = useContext(AuthContext);
 
   //
-  console.log(user);
 
   const onFinish = async (values: any) => {
-    login(values, dispatch);
+    await login(values, dispatch, (user) => {
+      if (user.role === valueRole.ADMIN) navigate('/admin/user-approve');
+      else navigate('/');
+    });
   };
 
   return (
@@ -22,7 +28,7 @@ const Login = () => {
         <Link to="/" className="w-[200px]">
           <img src={logo} alt="" className="w-[200px] absolute top-[20vh]" />
         </Link>
-        <div className="font-[700] text-[32px] text-[#33333] mb-[20px]">Đăng nhập</div>
+        <div className="font-[700] text-[32px] text-[#333333] mb-[20px]">Đăng nhập</div>
         <Form
           name="basic"
           labelCol={{ span: 8 }}

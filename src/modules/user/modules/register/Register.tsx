@@ -72,7 +72,7 @@ const Register = () => {
         <Link to="/" className="w-[200px] absolute top-[5vh]">
           <img src={logo} alt="" className="w-[200px]" />
         </Link>
-        <div className="font-[700] text-[32px] text-[#33333] mb-[20px]">Đăng ký</div>
+        <div className="font-[700] text-[32px] text-[#333333] mb-[20px]">Đăng ký</div>
         <Form
           name="basic"
           labelCol={{ span: 8 }}

@@ -6,9 +6,11 @@ import {
 } from '@ant-design/icons';
 import { Button, Input, Modal, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { replace, searchMember, setAvatar } from 'src/common/utils';
+import { AuthContext } from 'src/context/authContext/AuthContext';
 import {
   addUser,
   editUser,
@@ -17,7 +19,7 @@ import {
   removeUser,
 } from '../../../../../apis/admin';
 import LayoutFull from '../../../components/LayoutFull';
-import { roleUser } from '../../../constant/roleUser';
+import { roleUser, valueRole } from '../../../constant/roleUser';
 import ModalAddUser from '../modal/ModalAddUser';
 import ModalEditUser from '../modal/ModalEditUser';
 
@@ -31,6 +33,7 @@ interface DataType {
 }
 
 const UserApprove = () => {
+  const { user } = useContext(AuthContext);
   const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false);
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
   const [data, setData] = useState([]);
@@ -77,6 +80,8 @@ const UserApprove = () => {
     fetchAllMajors();
     fetchDataUser();
   }, []);
+
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
 
   const returnContentTable = () => {
     const newArray: any = [];
@@ -278,7 +283,7 @@ const UserApprove = () => {
     },
   ];
 
-  return (
+  return isRoleValid() ? (
     <>
       <LayoutFull>
         <div className="mx-[16px] my-[8px]">
@@ -317,6 +322,8 @@ const UserApprove = () => {
         listMajors={listMajors}
       />
     </>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 

@@ -1,9 +1,13 @@
 import { DeleteOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Button, Input, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { replace, searchMember } from 'src/common/utils';
-import { getAllUserPending } from '../../../../../apis/admin';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { valueRole } from 'src/modules/admin/constant/roleUser';
+import { approveUser, getAllUserPending } from '../../../../../apis/admin';
 import avatar from '../../../../../atoms/images/anh nen.png';
 import LayoutFull from '../../../components/LayoutFull';
 import { getMajor } from '../../../constant/majorUser';
@@ -15,55 +19,8 @@ interface DataType {
   address: string;
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Họ và tên',
-    width: 100,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-  },
-  {
-    title: 'Tên tài khoản',
-    width: 100,
-    dataIndex: 'age',
-    key: 'age',
-    fixed: 'left',
-  },
-  {
-    title: 'Tuổi',
-    dataIndex: 'address',
-    key: '1',
-    width: 150,
-  },
-  {
-    title: 'Số điện thoại',
-    dataIndex: 'address',
-    key: '2',
-    width: 150,
-  },
-  {
-    title: 'Ngành',
-    dataIndex: 'address',
-    key: '2',
-    width: 150,
-  },
-  {
-    title: 'Hành động',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
-    render: () => (
-      <div className="flex gap-[12px]">
-        <Tooltip title="Duyệt">
-          <Button shape="circle" icon={<CheckCircleOutlined />} />
-        </Tooltip>
-      </div>
-    ),
-  },
-];
-
 const UserPending = () => {
+  const { user } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState('');
 
@@ -76,6 +33,18 @@ const UserPending = () => {
     }
   };
 
+  const approve = async (id: any) => {
+    try {
+      const res = await approveUser(id);
+      if (res) {
+        fetchDataUser();
+        toast.success('Duyệt tài khoản thành công');
+      }
+    } catch (error) {
+      toast.success('Duyệt tài khoản thất bại');
+    }
+  };
+
   useEffect(() => {
     fetchDataUser();
   }, []);
@@ -83,6 +52,58 @@ const UserPending = () => {
   const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Họ và tên',
+      width: 100,
+      dataIndex: 'name',
+      key: 'name',
+      fixed: 'left',
+    },
+    {
+      title: 'Tên tài khoản',
+      width: 100,
+      dataIndex: 'age',
+      key: 'age',
+      fixed: 'left',
+    },
+    {
+      title: 'Tuổi',
+      dataIndex: 'address',
+      key: '1',
+      width: 150,
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'address',
+      key: '2',
+      width: 150,
+    },
+    {
+      title: 'Ngành',
+      dataIndex: 'address',
+      key: '2',
+      width: 150,
+    },
+    {
+      title: 'Hành động',
+      key: 'operation',
+      fixed: 'right',
+      width: 100,
+      render: (item) => (
+        <div className="flex gap-[12px]">
+          <Tooltip title="Duyệt">
+            <Button
+              shape="circle"
+              icon={<CheckCircleOutlined />}
+              onClick={() => approve(item.id)}
+            />
+          </Tooltip>
+        </div>
+      ),
+    },
+  ];
 
   const returnContentTable = () => {
     const newArray: any = [];
@@ -106,10 +127,12 @@ const UserPending = () => {
     return newArray;
   };
 
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
+
   const resultSearchUser = () => {
     return data.filter((item: any) => searchMember(replace(item.fullName), replace(keyword)));
   };
-  return (
+  return isRoleValid() ? (
     <LayoutFull>
       <div className="mx-[16px] my-[8px]">
         <div className="w-full flex justify-between mb-[10px] " style={{ height: '40px' }}>
@@ -125,6 +148,8 @@ const UserPending = () => {
         </div>
       </div>
     </LayoutFull>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 

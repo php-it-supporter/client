@@ -1,5 +1,5 @@
 import { Button, Input, Tooltip, Modal, Table, Select, Upload, Form } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import LayoutFull from '../../components/LayoutFull';
 import {
@@ -11,6 +11,9 @@ import {
 import { addMajor, deleteMajor, editMajor, getAllMajor } from '../../../../apis/admin';
 import { toast } from 'react-toastify';
 import { replace, searchMember } from 'src/common/utils';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { valueRole } from '../../constant/roleUser';
+import { Navigate } from 'react-router-dom';
 
 interface DataType {
   id: React.Key;
@@ -19,6 +22,7 @@ interface DataType {
 }
 
 const MajorManager = () => {
+  const { user } = useContext(AuthContext);
   const { confirm } = Modal;
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -43,6 +47,7 @@ const MajorManager = () => {
   const handleCancel = () => {
     setIsOpenModalAdd(false);
   };
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
 
   useEffect(() => {
     formEdit.setFieldsValue(majorEdit);
@@ -179,7 +184,7 @@ const MajorManager = () => {
       },
     },
   ];
-  return (
+  return isRoleValid() ? (
     <>
       <LayoutFull>
         <div className="mx-[16px] my-[8px]">
@@ -223,6 +228,8 @@ const MajorManager = () => {
         </Form>
       </Modal>
     </>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 

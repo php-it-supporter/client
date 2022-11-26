@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import logo from '../../../../atoms/images/logo.png';
 import Icon from '../../../../atoms/icon';
 import avatar from '../../../../atoms/images/anh nen.png';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { logout } from 'src/context/authContext/apiCall';
+import { setAvatar } from 'src/common/utils';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext);
   const [openDropDown, setOpenDropdown] = useState<boolean>(false);
   const handleOpenDroDown = () => setOpenDropdown(!openDropDown);
   const configDropDown = [
@@ -11,7 +17,10 @@ const Header = () => {
       value: 0,
       icon: 'log-out',
       label: 'Thoát',
-      onClick: () => {},
+      onClick: async () => {
+        await logout(dispatch);
+        navigate('/');
+      },
     },
   ];
   return (
@@ -21,8 +30,12 @@ const Header = () => {
         className="group flex items-center gap-[14px] cursor-pointer relative hover:bg-[#ecebeb] py-[4px] px-[8px] rounded-[8px]"
         onClick={handleOpenDroDown}
       >
-        <img src={avatar} alt="" className="w-[36px] h-[36px] rounded-full object-cover " />
-        <div className="font-[700] text-[16px] leading-[18px] text-[#333333]">Hồ Minh Hải</div>
+        <img
+          src={setAvatar(user?.avatar)}
+          alt=""
+          className="w-[36px] h-[36px] rounded-full object-cover "
+        />
+        <div className="font-[700] text-[16px] leading-[18px] text-[#333333]">{user?.fullName}</div>
         <Icon name="arrow-drop-down" width={12} />
         {openDropDown && (
           <div className="absolute -bottom-[0px] left-0 translate-y-[100%] z-20 bg-[#ffffff] w-full shadow-xl rounded-[8px] overflow-hidden ">
