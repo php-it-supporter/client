@@ -3,9 +3,10 @@ import newManagerModule from '../modules/admin/modules/post/newsManager';
 import userApproveModule from '../modules/admin/modules/user/userApprove';
 import userPendingModule from '../modules/admin/modules/user/userPending';
 import NewDetailModule from 'src/modules/admin/modules/post/newsManager/newsDetail';
-import formCreateModule from '../modules/admin/modules/post/formCreate';
 import eventManagerModule from 'src/modules/admin/modules/post/eventsManager';
 import categoryManagerModule from 'src/modules/admin/modules/category';
+import formCreateModule from 'src/modules/admin/modules/post/formCreate';
+import slideManagerModule from 'src/modules/admin/modules/slide';
 
 export const AdminRouter = [
   userPendingModule,
@@ -16,4 +17,5 @@ export const AdminRouter = [
   formCreateModule,
   NewDetailModule,
   categoryManagerModule,
+  slideManagerModule,
 ];

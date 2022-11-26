@@ -1,3 +1,4 @@
+import aboutUsModules from 'src/modules/user/modules/AboutUs';
 import detailEventPageModules from 'src/modules/user/modules/DetailEventPage';
 import detailPageModules from 'src/modules/user/modules/DetailPage';
 import eventsPageModules from 'src/modules/user/modules/events';
@@ -14,6 +15,7 @@ export const UserRouter = [
   newsModule,
   userPageModules,
   detailPageModules,
+  aboutUsModules,
   eventsPageModules,
   detailEventPageModules,
 ];

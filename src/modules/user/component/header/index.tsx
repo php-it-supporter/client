@@ -46,7 +46,7 @@ const Header = () => {
     {
       value: 0,
       text: 'Giới thiệu',
-      link: '',
+      link: '/about-us',
       display: true,
     },
     {

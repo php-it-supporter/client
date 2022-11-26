@@ -61,7 +61,7 @@ const Navigation = () => {
           value: 0,
           icon: 'slide',
           text: 'Quản lý slide',
-          link: '',
+          link: '/admin/slides',
         },
       ],
     },
