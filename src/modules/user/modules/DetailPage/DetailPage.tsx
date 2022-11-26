@@ -42,6 +42,10 @@ export default function DetailPage() {
     })();
   }, []);
 
+  const renderSeeMoreNews = () => {
+    let arr = [];
+  };
+
   return (
     <LayoutFullUser>
       <div className="mx-[20%] py-[20px]">
@@ -95,11 +99,9 @@ export default function DetailPage() {
           </Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
-          {listPosts.map((item) => {
-            let index = 0;
-            if (item.id !== Number(id)) {
-              index++;
-              return (
+          {listPosts.map(
+            (item) =>
+              item.id !== Number(id) && (
                 <div className="rounded-sm bg-white p-3 pb-5 shadow-sm">
                   <Link to={`/news/${item.id}`} className="block rounded-md overflow-hidden">
                     <img
@@ -125,10 +127,8 @@ export default function DetailPage() {
                     </div>
                   </div>
                 </div>
-              );
-            }
-            if (index == 4) return;
-          })}
+              )
+          )}
         </div>
       </div>
     </LayoutFullUser>

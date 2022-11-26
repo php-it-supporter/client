@@ -9,6 +9,7 @@ import { Button, Input, Modal } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { postApis } from 'src/apis/admin';
+import { replace, searchMember } from 'src/common/utils';
 import { AuthContext } from 'src/context/authContext/AuthContext';
 import { valueRole } from 'src/modules/admin/constant/roleUser';
 import LayoutFull from '../../../components/LayoutFull';
@@ -17,7 +18,7 @@ import Item from '../Item';
 const NewManager = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const [keyword, setKeyword] = useState('');
   const [reload, setReload] = useState(true);
   const [posts, setPosts] = useState([]);
   const [postSelected, setPostSelected] = useState<number>(0);
@@ -33,6 +34,12 @@ const NewManager = () => {
     }
   }, [reload]);
 
+  const resultSearchUser = () => {
+    return posts.filter((item: any) =>
+      searchMember(replace(item.author.fullName), replace(keyword))
+    );
+  };
+
   const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
 
   const onChange = (e: number) => {
@@ -44,12 +51,20 @@ const NewManager = () => {
     setReload(true);
   };
 
+  const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
   return isRoleValid() ? (
     <>
       <LayoutFull>
         <div className="mx-[16px] mt-[10px]">
           <div className="w-full flex justify-between mb-[10px]">
-            <Input placeholder="Nhập tên bài tin tức" className="w-[25%]" />
+            <Input
+              placeholder="Nhập tên tác giả cần tìm kiếm"
+              className="w-[25%]"
+              onChange={handleSearchUser}
+            />
             <Button
               type="primary"
               icon={<PlusOutlined />}
@@ -93,7 +108,7 @@ const NewManager = () => {
             </Button>
           </div>
         )}
-        {posts?.map((item: any, index) => (
+        {resultSearchUser()?.map((item: any, index) => (
           <Item
             index={index}
             data={item}
