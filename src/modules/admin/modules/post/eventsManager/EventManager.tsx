@@ -57,7 +57,7 @@ const EventManager = () => {
         <div className="mx-[16px] mt-[10px]">
           <div className="w-full flex justify-between mb-[10px]">
             <Input
-              placeholder="Nhập tên bài tin tức"
+              placeholder="Nhập tên tác giả cần tìm kiếm"
               className="w-[25%]"
               onChange={handleSearchUser}
             />
