@@ -113,7 +113,12 @@ const Register = () => {
           <Form.Item label="Tuổi" name="age" labelAlign="left">
             <Input />
           </Form.Item>
-          <Form.Item label="Ngành học" name="major" labelAlign="left">
+          <Form.Item
+            label="Ngành học"
+            name="major"
+            labelAlign="left"
+            rules={[{ required: true, message: 'Không được để trống!' }]}
+          >
             <Select>
               {listMajors?.map((item: any) => (
                 <Select.Option value={item.id}>{item.name}</Select.Option>
