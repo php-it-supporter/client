@@ -88,12 +88,13 @@ const EventManager = () => {
             </Button>
           </div>
         )}
-        {posts?.map((item: any, index) => (
+        {posts?.map((item: any, index: number) => (
           <Item
             data={item}
             isChecked={postSelected}
             onCheck={() => onChange(item.id)}
             value={item.id}
+            index={index}
           />
         ))}
       </LayoutFull>

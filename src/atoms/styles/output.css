@@ -450,12 +450,12 @@
   height: 550px;
 }
 
-.h-60 {
-  height: 15rem;
-}
-
 .h-\[80px\] {
   height: 80px;
+}
+
+.h-60 {
+  height: 15rem;
 }
 
 .min-h-\[500px\] {
@@ -1094,6 +1094,9 @@
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-\[\#33333\] {
+  color: #33333;
+}
 
 .text-\[\#208B33\] {
   --tw-text-opacity: 1;
@@ -1332,11 +1335,4 @@ a:hover {
   .xl\:block {
     display: block;
   }
-}
-.xl\:block {
-  display: block;
-}
-
-.xl\:block {
-  display: block;
 }
