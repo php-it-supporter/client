@@ -6,12 +6,32 @@ import {
   TwitterOutlined,
 } from '@ant-design/icons';
 import { Button } from 'antd';
-import React from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { postApis } from 'src/apis/admin';
 import Icon from 'src/atoms/icon';
 
 const NewDetail = () => {
   const navigate = useNavigate();
+  const [post, setPost] = useState<any>();
+  const postId = window.location.href.split('id=')[1];
+  const [mainContent, setMainContent] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const postRes = await postApis.findOne(+postId);
+        setPost(postRes.data.data);
+        const content = JSON.parse(postRes.data?.data?.content);
+        setMainContent(content);
+      } catch (error) {
+        console.log(error);
+        toast.error('kết nối lỗi');
+      }
+    })();
+  }, []);
   return (
     <div style={{ padding: 16 }}>
       <div
@@ -32,88 +52,26 @@ const NewDetail = () => {
       </div>
       <div className="px-[21%]">
         <div className="p-4 pb-5">
-          <h2 className="block text-2xl font-semibold text-gray-700 font-roboto">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iddo loremque, totam
-            architecto odit pariatur Lorem ips dolor.
-          </h2>
+          <h2 className="block text-2xl font-semibold text-gray-700 font-roboto">{post?.title}</h2>
           <div className="mt-2 flex space-x-4">
             <div className="flex text-gray-400 text-sm items-center">
               <Icon name="user-pending" width={14} className="mr-[10px]" />
-              Blogging Tips
+              {post?.author?.username}
             </div>
             <div className="flex text-gray-400 text-sm items-center">
               <Icon name="time" width={14} className="mr-[10px]" />
-              June 11, 2021
+              {new Date(post?.created_at)?.toLocaleDateString('en-US')}
             </div>
           </div>
-
-          <p className="text-gray-500 text-sm mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis et sunt saepe
-            accusamus eum ex sint est neque provident tempore, minus laborum repudiandae vitae
-            temporibus nesciunt, sed enim quo harum a id, alias maiores! Incidunt iusto minus
-            explicabo itaque iure recusandae
-          </p>
-
-          <p className="bg-green-50 border border-green-500 p-3 text-sm  mt-5">
-            <span className="text-xl mr-1 text-gray-400">
-              <i className="fas fa-quote-left"></i>
-            </span>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus blanditiis earum
-            nam, quisquam magnam aut odio aliquam inventore quibusdam mollitia! Alias, mollitia
-            eveniet iure quidem natus quis assumenda consectetur beatae. Lorem, ipsum dolor
-            quibusdam.
-            <span className="text-xl ml-1 text-gray-400">
-              <i className="fas fa-quote-right"></i>
-            </span>
-          </p>
-
-          <p className="text-gray-500 text-sm mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis et sunt saepe
-            accusamus eum ex sint est neque provident tempore, minus laborum repudiandae vitae
-            temporibus nesciunt, sed enim quo harum a id, alias maiores! Incidunt iusto minus
-            explicabo itaque iure recusandae
-          </p>
-
-          <ul className="mt-6 pl-5  space-y-2">
-            <li className="text-sm">
-              <span className="mr-1">
-                <i className="fas fa-angle-right"></i>
-              </span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis.
-            </li>
-            <li className="text-sm">
-              <span className="mr-1">
-                <i className="fas fa-angle-right"></i>
-              </span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis.
-            </li>
-            <li className="text-sm">
-              <span className="mr-1">
-                <i className="fas fa-angle-right"></i>
-              </span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis.
-            </li>
-            <li className="text-sm">
-              <span className="mr-1">
-                <i className="fas fa-angle-right"></i>
-              </span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis.
-            </li>
-          </ul>
-
-          <p className="text-gray-500 text-sm mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis et sunt saepe
-            accusamus eum ex sint est neque provident tempore, minus laborum repudiandae vitae
-            temporibus nesciunt, sed enim quo harum a id, alias maiores! Incidunt iusto minus
-            explicabo itaque iure recusandae
-          </p>
-
-          <p className="text-gray-500 text-sm mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis et sunt saepe
-            accusamus eum ex sint est neque provident tempore, minus laborum repudiandae vitae
-            temporibus nesciunt, sed enim quo harum a id, alias maiores! Incidunt iusto minus
-            explicabo itaque iure recusandae
-          </p>
+          {mainContent && (
+            <Editor
+              wrapperClassName="demo-wrapper"
+              editorClassName="demo-editor"
+              initialContentState={mainContent}
+              readOnly
+              toolbarHidden
+            />
+          )}
 
           <div className="mt-5 pt-5 border-t border-gray-200 flex gap-2">
             <Button icon={<FacebookOutlined />} />

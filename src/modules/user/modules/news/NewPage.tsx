@@ -2,13 +2,31 @@ import LayoutFullUser from '../../component/layout';
 import image1 from '../../../../atoms/images/312221646_771694890930297_6215795452150606467_n.png';
 import image2 from '../../../../atoms/images/309911559_766777848088668_7456215299439506121_n.png';
 import image3 from '../../../../atoms/images/292355658_1935330136857061_8603834351602225961_n.png';
+import React, { useEffect, useState } from 'react';
+import { postApis } from 'src/apis/admin';
+import Icon from 'src/atoms/icon';
+import { Link } from 'react-router-dom';
+// import process from 'process';
 
 const NewPage = () => {
+  const [reload, setReload] = useState(true);
+  const [posts, setPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (reload) {
+      (async () => {
+        const postRes = await postApis.findAll();
+        setPosts(postRes.data?.data || []);
+      })();
+
+      setReload(false);
+    }
+  }, [reload]);
   return (
     <LayoutFullUser>
       <div className="flex">
         <div className="w-[calc(20%-100px)] sticky top-[10px] ml-[50px] mr-[20px] my-[20px] bg-white shadow-sm rounded-sm p-4 h-[500px]">
-          <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Categories</h3>
+          <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Thể loại</h3>
           <div className="space-y-2">
             <a
               href="#"
@@ -112,161 +130,74 @@ const NewPage = () => {
             </a>
           </div>
         </div>
-        <div className="my-[20px] ">
+        <div className="my-[20px] flex-1">
           <div className="rounded-sm overflow-hidden bg-white shadow-sm">
-            <a href="view.html" className="block rounded-md overflow-hidden">
+            <Link to={`/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
               <img
-                src="src/images/img-12.jpg"
+                src={`${process.env.DOMAIN}/${posts[0]?.image}`}
                 className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
               />
-            </a>
+            </Link>
             <div className="p-4 pb-5">
-              <a href="view.html">
+              <Link to={`/${posts[0]?.id}`}>
                 <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iddo loremque, totam
-                  architecto odit pariatur Lorem ips dolor.
+                  {posts[0]?.title}
                 </h2>
-              </a>
+              </Link>
 
-              <p className="text-gray-500 text-sm mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem distinctio
-                doloremque placeat ipsa! Sequi, recusandae. In numquam similique molestiae error,
-                magni velit suscipit repudiandae itaqu....
-              </p>
+              <p className="text-gray-500 text-sm mt-2">{posts[0]?.content}</p>
               <div className="mt-3 flex space-x-4">
                 <div className="flex text-gray-400 text-sm items-center">
                   <span className="mr-2 text-xs">
-                    <i className="far fa-user"></i>
+                    <Icon name="user-pending" width={14} />
                   </span>
-                  Blogging Tips
+                  {posts[0]?.author?.username}
                 </div>
                 <div className="flex text-gray-400 text-sm items-center">
                   <span className="mr-2 text-xs">
-                    <i className="far fa-clock"></i>
+                    <Icon name="time" width={14} />
                   </span>
-                  June 11, 2021
+                  {new Date(posts[0]?.created_at)?.toLocaleDateString('en-US')}
                 </div>
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-              <a href="#" className="block rounded-md overflow-hidden">
-                <img
-                  src="src/images/img-7.jpg"
-                  className="w-full h-60 object-cover transform hover:scale-110 transition duration-500"
-                />
-              </a>
-              <div className="mt-3">
-                <a href="#">
-                  <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor sit amet consec tetur adipisicing elit.
-                  </h2>
-                </a>
-                <div className="mt-2 flex space-x-3">
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
+            {posts.map(
+              (item, index) =>
+                index !== 0 && (
+                  <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
+                    <Link to={`/${item.id}`} className="block rounded-md overflow-hidden">
+                      <img
+                        src={`${process.env.DOMAIN}/${item?.image}`}
+                        className="w-full h-[30vh] object-cover transform hover:scale-110 transition duration-500"
+                      />
+                    </Link>
+                    <div className="mt-3">
+                      <Link to={`/${item.id}`}>
+                        <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto ">
+                          {item?.title}
+                        </h2>
+                      </Link>
+                      <div className="mt-2 flex space-x-3">
+                        <div className="flex text-gray-400 text-sm items-center">
+                          <span className="mr-2 text-xs">
+                            <Icon name="user-pending" width={14} />
+                          </span>
+                          {item.author?.username}
+                        </div>
+                        <div className="flex text-gray-400 text-sm items-center">
+                          <span className="mr-2 text-xs">
+                            <Icon name="time" width={14} />
+                          </span>
+                          {new Date(item?.created_at)?.toLocaleDateString('en-US')}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-              <a href="#" className="block rounded-md overflow-hidden">
-                <img
-                  src="src/images/img-6.jpg"
-                  className="w-full h-60 object-cover transform hover:scale-110 transition duration-500"
-                />
-              </a>
-              <div className="mt-3">
-                <a href="#">
-                  <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor sit amet consec tetur adipisicing elit.
-                  </h2>
-                </a>
-                <div className="mt-2 flex space-x-3">
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                  </div>
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-              <a href="#" className="block rounded-md overflow-hidden">
-                <img
-                  src="src/images/img-5.jpg"
-                  className="w-full h-60 object-cover transform hover:scale-110 transition duration-500"
-                />
-              </a>
-              <div className="mt-3">
-                <a href="#">
-                  <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor sit amet consec tetur adipisicing elit.
-                  </h2>
-                </a>
-                <div className="mt-2 flex space-x-3">
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                  </div>
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-              <a href="#" className="block rounded-md overflow-hidden">
-                <img
-                  src="src/images/img-11.jpg"
-                  className="w-full h-60 object-cover transform hover:scale-110 transition duration-500"
-                />
-              </a>
-              <div className="mt-3">
-                <a href="#">
-                  <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor sit amet consec tetur adipisicing elit.
-                  </h2>
-                </a>
-                <div className="mt-2 flex space-x-3">
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                  </div>
-                  <div className="flex text-gray-400 text-sm items-center">
-                    <span className="mr-2 text-xs">
-                      <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                  </div>
-                </div>
-              </div>
-            </div>
+                )
+            )}
           </div>
         </div>
         <div className=" w-[calc(20%-100px)] sticky top-[10px] mr-[50px] ml-[20px] my-[20px] bg-white shadow-sm rounded-sm p-4 h-[550px]">

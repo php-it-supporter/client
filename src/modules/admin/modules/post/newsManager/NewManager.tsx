@@ -90,6 +90,7 @@ const NewManager = () => {
         )}
         {posts?.map((item: any, index) => (
           <Item
+            index={index}
             data={item}
             isChecked={postSelected}
             onCheck={() => onChange(item.id)}
