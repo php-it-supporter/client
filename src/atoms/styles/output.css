@@ -633,6 +633,12 @@
   overflow: hidden;
 }
 
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rounded-\[8px\] {
   border-radius: 8px;
 }

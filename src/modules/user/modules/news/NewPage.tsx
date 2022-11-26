@@ -8,6 +8,7 @@ import Icon from 'src/atoms/icon';
 import { Link } from 'react-router-dom';
 // import process from 'process';
 import { categoryApis } from 'src/apis/admin';
+import { Editor } from 'react-draft-wysiwyg';
 
 const NewPage = () => {
   const [reload, setReload] = useState(true);
@@ -17,7 +18,7 @@ const NewPage = () => {
   useEffect(() => {
     if (reload) {
       (async () => {
-        const postRes = await postApis.findAll();
+        const postRes = await postApis.findAll({ type: 0 });
         setPosts(postRes.data?.data || []);
       })();
 
@@ -51,114 +52,24 @@ const NewPage = () => {
                 <p className="ml-auto font-normal">{item.posts.length}</p>
               </a>
             ))}
-            {/* <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Business</span>
-              <p className="ml-auto font-normal">(15)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Fashion</span>
-              <p className="ml-auto font-normal">(5)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Food</span>
-              <p className="ml-auto font-normal">(10)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Learn</span>
-              <p className="ml-auto font-normal">(3)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Music</span>
-              <p className="ml-auto font-normal">(7)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Nature</span>
-              <p className="ml-auto font-normal">(0)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>People</span>
-              <p className="ml-auto font-normal">(13)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Sports</span>
-              <p className="ml-auto font-normal">(7)</p>
-            </a>
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Technology</span>
-              <p className="ml-auto font-normal">(17)</p>
-            </a> */}
           </div>
         </div>
         <div className="my-[20px] flex-1">
           <div className="rounded-sm overflow-hidden bg-white shadow-sm">
-            <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
+            <Link to={`/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
               <img
                 src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
                 className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
               />
             </Link>
             <div className="p-4 pb-5">
-              <Link to={`/news/${posts[0]?.id}`}>
+              <Link to={`/${posts[0]?.id}`}>
                 <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
                   {posts[0]?.title}
                 </h2>
               </Link>
 
-              <p className="text-gray-500 text-sm mt-2">{posts[0]?.content}</p>
+              {/* <p className="text-gray-500 text-sm mt-2">{}</p> */}
               <div className="mt-3 flex space-x-4">
                 <div className="flex text-gray-400 text-sm items-center">
                   <span className="mr-2 text-xs">
