@@ -32,7 +32,7 @@ const News = () => {
         </Link>
       </div>
       <div className="rounded-sm overflow-hidden bg-white shadow-sm mt-[20px] ">
-        <Link to={`/news/${posts[0].id}`} className="block rounded-md overflow-hidden">
+        <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
           <img
             src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
             className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
@@ -83,11 +83,11 @@ const News = () => {
                     className="w-full h-60 object-cover transform hover:scale-110 transition duration-500 rounded-[4px]"
                   />
                   <div className="mt-3">
-                    <a href="#">
+                    <Link to={`/news/${item.id}`}>
                       <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
                         {item?.title}
                       </h2>
-                    </a>
+                    </Link>
                     <div className="mt-2 flex space-x-3">
                       <div className="flex text-gray-400 text-sm items-center">
                         <span className="mr-2 text-xs">

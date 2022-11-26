@@ -132,14 +132,14 @@ const NewPage = () => {
         </div>
         <div className="my-[20px] flex-1">
           <div className="rounded-sm overflow-hidden bg-white shadow-sm">
-            <Link to={`/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
+            <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
               <img
-                src={`${process.env.DOMAIN}/${posts[0]?.image}`}
+                src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
                 className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
               />
             </Link>
             <div className="p-4 pb-5">
-              <Link to={`/${posts[0]?.id}`}>
+              <Link to={`/news/${posts[0]?.id}`}>
                 <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
                   {posts[0]?.title}
                 </h2>
@@ -168,14 +168,14 @@ const NewPage = () => {
               (item, index) =>
                 index !== 0 && (
                   <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-                    <Link to={`/${item.id}`} className="block rounded-md overflow-hidden">
+                    <Link to={`/news/${item.id}`} className="block rounded-md overflow-hidden">
                       <img
-                        src={`${process.env.DOMAIN}/${item?.image}`}
+                        src={`${process.env.REACT_APP_DOMAIN}/${item?.image}`}
                         className="w-full h-[30vh] object-cover transform hover:scale-110 transition duration-500"
                       />
                     </Link>
                     <div className="mt-3">
-                      <Link to={`/${item.id}`}>
+                      <Link to={`/news/${item.id}`}>
                         <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto ">
                           {item?.title}
                         </h2>
@@ -200,7 +200,7 @@ const NewPage = () => {
             )}
           </div>
         </div>
-        <div className=" w-[calc(20%-100px)] sticky top-[10px] mr-[50px] ml-[20px] my-[20px] bg-white shadow-sm rounded-sm p-4 h-[550px]">
+        <div className=" w-[calc(20%-100px)] sticky top-[10px] mr-[50px] ml-[20px] my-[20px] shadow-sm rounded-sm p-4 h-[550px]">
           <img src={image1} alt="" className="w-full object-cover" />
           <img src={image2} alt="" className="w-full object-cover mt-[12px]" />
           <img src={image3} alt="" className="w-full object-cover mt-[12px]" />
