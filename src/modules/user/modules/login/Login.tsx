@@ -1,21 +1,28 @@
 import { Button, Form, Input } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login } from 'src/apis/admin';
 import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
 
 const Login = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const onFinish = async (values: any) => {
+    try {
+      await login(values);
+      toast.success('Success');
+
+      // TODO: handle access token and redirect user
+    } catch (error: any) {
+      toast.error(error.response.data.message || 'Có lỗi xảy ra');
+    }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
   return (
     <div className="flex items-center w-[100vw] h-[100vh] relative">
       <div className="w-[50vw] flex flex-col items-center ">
-        <img src={logo} alt="" className="w-[200px] absolute top-[20vh]" />
+        <Link to="/" className="w-[200px]">
+          <img src={logo} alt="" className="w-[200px] absolute top-[20vh]" />
+        </Link>
         <div className="font-[700] text-[32px] text-[#33333] mb-[20px]">Đăng nhập</div>
         <Form
           name="basic"
@@ -23,7 +30,6 @@ const Login = () => {
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
           className="w-[50%] px-[40px]"
         >
