@@ -1,3 +1,4 @@
+import aboutUsModules from 'src/modules/user/modules/AboutUs';
 import detailPageModules from 'src/modules/user/modules/DetailPage';
 import userPageModules from 'src/modules/user/modules/userPage';
 import homeModules from '../modules/user/modules/home';
@@ -12,4 +13,5 @@ export const UserRouter = [
   newsModule,
   userPageModules,
   detailPageModules,
+  aboutUsModules,
 ];
