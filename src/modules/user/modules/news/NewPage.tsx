@@ -39,17 +39,19 @@ const NewPage = () => {
         <div className="w-[calc(20%-100px)] sticky top-[10px] ml-[50px] mr-[20px] my-[20px] bg-white shadow-sm rounded-sm p-4 h-[500px]">
           <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Thể loại</h3>
           <div className="space-y-2">
-            <a
-              href="#"
-              className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
-            >
-              <span className="mr-2">
-                <i className="far fa-folder-open"></i>
-              </span>
-              <span>Beauti</span>
-              <p className="ml-auto font-normal">(12)</p>
-            </a>
-            <a
+            {categories.map((item: any) => (
+              <a
+                href="#"
+                className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
+              >
+                <span className="mr-2">
+                  <i className="far fa-folder-open"></i>
+                </span>
+                <span>{item.name}</span>
+                <p className="ml-auto font-normal">{item.posts.length}</p>
+              </a>
+            ))}
+            {/* <a
               href="#"
               className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
             >
@@ -138,7 +140,7 @@ const NewPage = () => {
               </span>
               <span>Technology</span>
               <p className="ml-auto font-normal">(17)</p>
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="my-[20px] flex-1">
