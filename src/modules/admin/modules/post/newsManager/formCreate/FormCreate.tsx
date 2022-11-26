@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { Button, Col, Form, Input, Row, Select, Upload } from 'antd';
 
@@ -51,9 +50,9 @@ export default function FormCreate() {
       const formData = new FormData();
       formData.append('content', JSON.stringify(content));
       Object.keys(data).forEach((item) => {
-        if (item === 'image')
-          formData.append(item, form.getFieldValue(item).fileList[0].originFileObj);
-        else formData.append(item, form.getFieldValue(item));
+        if (item === 'image' && data[item]?.fileList?.[0])
+          formData.append(item, data[item].fileList[0].originFileObj);
+        else formData.append(item, data[item]);
       });
 
       if (formType === 'create') {
@@ -66,7 +65,7 @@ export default function FormCreate() {
 
       navigate('/admin/news-manager');
     } catch (error: any) {
-      toast.error(error.response.data?.message || 'Có lỗi xảy ra!');
+      toast.error(error.response?.data?.message || 'Có lỗi xảy ra!');
     }
   };
 
