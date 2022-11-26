@@ -8,12 +8,15 @@ interface props {
   isChecked: number;
   onCheck: () => void;
   value: number;
+  index: number;
 }
 
-const Item = ({ data, isChecked, onCheck, value }: props) => {
+const Item = ({ data, isChecked, onCheck, value, index }: props) => {
   return (
     <div
-      className="flex items-center justify-between px-[16px] bg-white hover:bg-[#E5F9FF] py-[8px] border-b-[1px] border-t-[1px] border-l-0 border-r-0 border-solid border-[#CAD8E6] cursor-pointer"
+      className={`flex items-center justify-between px-[16px] bg-white hover:bg-[#E5F9FF] py-[8px] border-b-[1px] ${
+        index === 0 ? 'border-t-[1px]' : 'border-t-0'
+      } border-l-0 border-r-0 border-solid border-[#CAD8E6] cursor-pointer`}
       onClick={onCheck}
     >
       <div className="flex items-center">

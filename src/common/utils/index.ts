@@ -1,7 +1,7 @@
 import avatarDefault from '../../atoms/images/default-avatar.png';
 
 export const setAvatar = (avatar: string) => {
-  if (avatar) return `http://localhost:8000/${avatar}`;
+  if (avatar) return `${process.env.DOMAIN}/${avatar}`;
   return avatarDefault;
 };
 

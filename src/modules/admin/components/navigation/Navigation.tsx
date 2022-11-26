@@ -39,6 +39,12 @@ const Navigation = () => {
           text: 'Quản lý sự kiện',
           link: '/admin/event-manager',
         },
+        {
+          value: 2,
+          icon: 'event',
+          text: 'Quản lý thể loại',
+          link: '/admin/category-manager',
+        },
       ],
     },
     {
