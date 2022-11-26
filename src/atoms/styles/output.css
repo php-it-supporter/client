@@ -292,6 +292,10 @@
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+
+.mx-\[20px\] {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .mb-\[24px\] {
@@ -428,6 +432,22 @@
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mr-\[20vh\] {
+  margin-right: 20vh;
+}
+
+.mr-\[20vw\] {
+  margin-right: 20vw;
+}
+
+.ml-\[5px\] {
+  margin-left: 5px;
+}
+
+.ml-\[10px\] {
+  margin-left: 10px;
 }
 
 .block {
@@ -570,8 +590,12 @@
   width: 80px;
 }
 
+
 .w-\[1200px\] {
   width: 1200px;
+
+.w-\[30\%\] {
+  width: 30%;
 }
 
 .flex-1 {
@@ -842,6 +866,11 @@
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#002147\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 33 71 / var(--tw-bg-opacity));
+}
+
 .object-cover {
   object-fit: cover;
 }
@@ -864,6 +893,10 @@
 
 .p-\[10px\] {
   padding: 10px;
+}
+
+.p-\[20px\] {
+  padding: 20px;
 }
 
 .py-\[4px\] {
@@ -1307,6 +1340,16 @@ a:hover {
 .hover\:text-blue-500:hover {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+
+.hover\:text-\[\#333333\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(51 51 51 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
 }
 
 .group:hover .group-hover\:text-\[\#2EA2C7\] {

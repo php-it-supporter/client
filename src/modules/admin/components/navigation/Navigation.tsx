@@ -21,6 +21,12 @@ const Navigation = () => {
           text: 'User chưa duyệt',
           link: '/admin/user-pending',
         },
+        {
+          value: 2,
+          icon: 'major',
+          text: 'Quản lý chuyên ngành',
+          link: '/admin/major-manager',
+        },
       ],
     },
     {
@@ -41,7 +47,7 @@ const Navigation = () => {
         },
         {
           value: 2,
-          icon: 'event',
+          icon: 'infor',
           text: 'Quản lý thể loại',
           link: '/admin/category-manager',
         },
@@ -53,12 +59,6 @@ const Navigation = () => {
       list: [
         {
           value: 0,
-          icon: 'major',
-          text: 'Quản lý chuyên ngành',
-          link: '/admin/major-manager',
-        },
-        {
-          value: 1,
           icon: 'slide',
           text: 'Quản lý slide',
           link: '/admin/slides',

@@ -9,6 +9,7 @@ import { Button, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postApis } from 'src/apis/admin';
+import { replace, searchMember } from 'src/common/utils';
 import LayoutFull from '../../../components/LayoutFull';
 import Item from '../Item';
 
@@ -18,6 +19,11 @@ const EventManager = () => {
   const [reload, setReload] = useState(true);
   const [posts, setPosts] = useState([]);
   const [postSelected, setPostSelected] = useState<number>(0);
+  const [keyword, setKeyword] = useState('');
+
+  const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
 
   useEffect(() => {
     if (reload) {
@@ -39,12 +45,22 @@ const EventManager = () => {
     setReload(true);
   };
 
+  const resultSearchUser = () => {
+    return posts.filter((item: any) =>
+      searchMember(replace(item.author.fullName), replace(keyword))
+    );
+  };
+
   return (
     <>
       <LayoutFull>
         <div className="mx-[16px] mt-[10px]">
           <div className="w-full flex justify-between mb-[10px]">
-            <Input placeholder="Nhập tên bài tin tức" className="w-[25%]" />
+            <Input
+              placeholder="Nhập tên tác giả cần tìm kiếm"
+              className="w-[25%]"
+              onChange={handleSearchUser}
+            />
             <Button
               type="primary"
               icon={<PlusOutlined />}
@@ -88,7 +104,7 @@ const EventManager = () => {
             </Button>
           </div>
         )}
-        {posts?.map((item: any, index: number) => (
+        {resultSearchUser()?.map((item: any, index: number) => (
           <Item
             data={item}
             isChecked={postSelected}

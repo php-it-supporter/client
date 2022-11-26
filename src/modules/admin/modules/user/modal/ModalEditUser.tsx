@@ -90,7 +90,7 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
           </Select>
         </Form.Item>
 
-        <Form.Item label="Upload" valuePropName="fileList">
+        <Form.Item label="Avatar" name="avatar">
           <Upload action="/upload.do" listType="picture-card">
             <div>
               <PlusOutlined />

@@ -1,5 +1,7 @@
 import aboutUsModules from 'src/modules/user/modules/AboutUs';
+import detailEventPageModules from 'src/modules/user/modules/DetailEventPage';
 import detailPageModules from 'src/modules/user/modules/DetailPage';
+import eventsPageModules from 'src/modules/user/modules/events';
 import userPageModules from 'src/modules/user/modules/userPage';
 import homeModules from '../modules/user/modules/home';
 import loginModule from '../modules/user/modules/login';
@@ -14,4 +16,6 @@ export const UserRouter = [
   userPageModules,
   detailPageModules,
   aboutUsModules,
+  eventsPageModules,
+  detailEventPageModules,
 ];
