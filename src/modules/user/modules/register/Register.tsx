@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select, Upload } from 'antd';
 import React, { useRef, useEffect, useState } from 'react';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ImgCrop from 'antd-img-crop';
 import { PlusOutlined } from '@ant-design/icons';
@@ -10,6 +10,8 @@ import image from '../../../../atoms/images/background.png';
 import logo from '../../../../atoms/images/logo.png';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [listMajors, setListMajors] = useState([]);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
@@ -58,7 +60,7 @@ const Register = () => {
       await register(formData);
       toast.success('Success');
 
-      // TODO: handle access token and redirect user
+      navigate('/login');
     } catch (error: any) {
       toast.error(error.response.data.message || 'Có lỗi xảy ra');
     }

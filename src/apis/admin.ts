@@ -25,7 +25,8 @@ export const deleteMajor = (param: any) => axios.delete(`${END_POINT}/majors/${p
 
 export const editMajor = (param: any, id: any) => axios.put(`${END_POINT}/majors/${id}`, param);
 
-export const login = (body: any) => axios.post(`${END_POINT}/auth/login`, body);
+export const findOneUser = (id: number) => axios.post(`${END_POINT}/users/${id}`);
+export const loginApi = (body: any) => axios.post(`${END_POINT}/auth/login`, body);
 export const register = (body: any) => axios.post(`${END_POINT}/auth/register`, body);
 
 export const categoryApis = {
