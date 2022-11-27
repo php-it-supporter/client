@@ -1,6 +1,7 @@
 import { Form, Input, Modal, Select, Upload } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
+import { roleUser } from 'src/modules/admin/constant/roleUser';
 
 const KHOA = ['k10', 'k11', 'k12', 'k13', 'k14', 'k15', 'k16', 'k17'];
 interface props {
@@ -75,9 +76,9 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
         </Form.Item>
         <Form.Item label="Vai trò" name="role">
           <Select>
-            <Select.Option value="r1">Admin</Select.Option>
-            <Select.Option value="r2">Cán bộ</Select.Option>
-            <Select.Option value="r3">Sinh viên</Select.Option>
+            <Select.Option value="r1">{roleUser.r1}</Select.Option>
+            <Select.Option value="r2">{roleUser.r2}</Select.Option>
+            <Select.Option value="r3">{roleUser.r3}</Select.Option>
           </Select>
         </Form.Item>
 
