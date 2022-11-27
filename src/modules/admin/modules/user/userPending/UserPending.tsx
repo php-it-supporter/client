@@ -56,7 +56,7 @@ const UserPending = () => {
   const columns: ColumnsType<DataType> = [
     {
       title: 'Họ và tên',
-      width: 100,
+      width: 200,
       dataIndex: 'name',
       key: 'name',
       fixed: 'left',
@@ -64,25 +64,31 @@ const UserPending = () => {
     {
       title: 'Tên tài khoản',
       width: 100,
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'username',
+      key: 'username',
       fixed: 'left',
     },
     {
       title: 'Khóa',
-      dataIndex: 'address',
-      key: '1',
+      dataIndex: 'age',
+      key: 'age',
       width: 150,
     },
     {
       title: 'Số điện thoại',
-      dataIndex: 'address',
+      dataIndex: 'phone',
       key: '2',
       width: 150,
     },
     {
+      title: 'Ngày tạo',
+      dataIndex: 'formatCreated_at',
+      key: 'created_at',
+      width: 150,
+    },
+    {
       title: 'Ngành',
-      dataIndex: 'address',
+      dataIndex: 'major',
       key: '2',
       width: 150,
     },
@@ -120,7 +126,10 @@ const UserPending = () => {
         username: item.username,
         age: item.age,
         phone: item.phone,
-        major: getMajor(item.major),
+        formatCreated_at: item.created_at
+          ? new Date(item.created_at)?.toLocaleDateString('en-US')
+          : '',
+        major: item.major.name,
       });
     });
 
