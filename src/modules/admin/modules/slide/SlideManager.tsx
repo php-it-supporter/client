@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Modal, Row, Tooltip } from 'antd';
@@ -6,8 +6,12 @@ import LayoutFull from '../../components/LayoutFull';
 import FormUpload from './FormUpload';
 import { slideApis } from 'src/apis/admin';
 import { toast } from 'react-toastify';
+import { valueRole } from '../../constant/roleUser';
+import { AuthContext } from 'src/context/authContext/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export default function SlideManager() {
+  const { user } = useContext(AuthContext);
   const [slides, setSlides] = useState([]);
   const [reload, setReload] = useState(true);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -42,7 +46,9 @@ export default function SlideManager() {
     }
   };
 
-  return (
+  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
+
+  return isRoleValid() ? (
     <LayoutFull>
       <div className="mx-[16px] my-[8px] overflow-hidden">
         <Button
@@ -110,5 +116,7 @@ export default function SlideManager() {
         onSubmit={handleUpload}
       />
     </LayoutFull>
+  ) : (
+    <Navigate replace to="/" />
   );
 }

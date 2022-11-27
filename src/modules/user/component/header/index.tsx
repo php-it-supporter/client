@@ -11,9 +11,10 @@ import { valueRole } from 'src/modules/admin/constant/roleUser';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, isLogin, dispatch } = useContext(AuthContext);
   const [openDropDown, setOpenDropdown] = useState<boolean>(false);
   const handleOpenDroDown = () => setOpenDropdown(!openDropDown);
+  console.log({ isLogin });
   const configDropDown = () => {
     let arr = [
       {
@@ -72,7 +73,7 @@ const Header = () => {
     <div className="relative">
       <img src={logo} alt="" className="w-[100%] h-[130px] object-cover" />
       <div className="absolute top-0 right-[20%] ">
-        {!user ? (
+        {!isLogin ? (
           <div className="flex gap-[10px] items-center mt-[0.4vw]">
             <Avatar size="small" icon={<UserOutlined />} className="xl:block hidden" />
             <Link to="/login" className="font-[700] text-[0.8vw] text-[#663399]">

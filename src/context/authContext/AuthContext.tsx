@@ -26,6 +26,7 @@ const AuthContextProvider = ({ children }: { children: any }) => {
         user: state.user,
         isLoading: state.isLoading,
         error: state.error,
+        isLogin: state.isLogin,
         dispatch,
       }}
     >
