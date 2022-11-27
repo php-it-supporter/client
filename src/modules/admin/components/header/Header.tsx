@@ -25,7 +25,10 @@ const Header = () => {
   ];
   return (
     <div className="flex justify-between items-center bg-[#ffffff] pl-[12px] pr-[24px] shadow-lg relative z-10">
-      <img src={logo} alt="" className="h-[60px] " />
+      <div className="flex items-center gap-2">
+        <img src={logo} alt="" className="h-[32px] object-cover" />
+        <p className="text-orange-500 font-bold text-xl m-0">IT Supporter</p>
+      </div>
       <div
         className="group flex items-center gap-[14px] cursor-pointer relative hover:bg-[#ecebeb] py-[4px] px-[8px] rounded-[8px]"
         onClick={handleOpenDroDown}

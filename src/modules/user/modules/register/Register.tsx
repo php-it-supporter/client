@@ -113,7 +113,7 @@ const Register = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Tuổi"
+            label="Khóa"
             name="age"
             labelAlign="left"
             rules={[{ required: true, message: 'Không được để trống!' }]}
