@@ -17,8 +17,10 @@ const AuthContextProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     // refresh user data, update localStorage
-    if (state.user?.user_id) fetchUser(state.user?.user_id, dispatch);
-  }, [state.user?.user_id]);
+    if (state.user?.id) {
+      fetchUser(state.user?.id, dispatch);
+    }
+  }, [state.user?.id]);
 
   return (
     <AuthContext.Provider
