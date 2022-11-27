@@ -8,7 +8,7 @@ const Footer = () => {
       <footer className="p-4 absolute top-0 w-full mt-[20px] px-[18%]">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <img src={logo} className="mr-3 w-[200px]" />
+            <img src={logo} className="mr-3 w-[80px]" />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
