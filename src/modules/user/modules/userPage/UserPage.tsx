@@ -56,7 +56,7 @@ const UserPage = () => {
       fixed: 'left',
     },
     {
-      title: 'Tuổi',
+      title: 'Khóa',
       dataIndex: 'age',
       key: 'age',
       width: 150,

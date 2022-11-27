@@ -53,7 +53,7 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
         <Form.Item label="Số điện thoại" name="phone">
           <Input />
         </Form.Item>
-        <Form.Item label="Tuổi" name="age">
+        <Form.Item label="Khóa" name="age">
           <Input />
         </Form.Item>
         <Form.Item label="Ngành học" name="major">

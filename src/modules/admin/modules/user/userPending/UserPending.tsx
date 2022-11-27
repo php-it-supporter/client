@@ -69,7 +69,7 @@ const UserPending = () => {
       fixed: 'left',
     },
     {
-      title: 'Tuổi',
+      title: 'Khóa',
       dataIndex: 'address',
       key: '1',
       width: 150,

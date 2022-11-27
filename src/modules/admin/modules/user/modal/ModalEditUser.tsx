@@ -71,7 +71,7 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
           <Input.Password />
         </Form.Item>
 
-        <Form.Item label="Tuổi" name="age">
+        <Form.Item label="Khóa" name="age">
           <Input />
         </Form.Item>
 
