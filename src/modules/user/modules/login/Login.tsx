@@ -25,10 +25,10 @@ const Login = () => {
   return (
     <div className="flex items-center w-[100vw] h-[100vh] relative">
       <div className="w-[50vw] flex flex-col items-center ">
-        <Link to="/" className="w-[120px]">
+        <Link to="/" className="w-[120px] mb-10">
           <img src={logo} alt="" className="w-[120px] absolute top-[20vh]" />
         </Link>
-        <div className="font-[700] text-[32px] text-[#333333] mb-[20px]">Đăng nhập</div>
+        <div className="font-[700] text-[32px] text-[#333333] mb-[20px] mt-20">Đăng nhập</div>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
