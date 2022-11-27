@@ -25,8 +25,8 @@ const Login = () => {
   return (
     <div className="flex items-center w-[100vw] h-[100vh] relative">
       <div className="w-[50vw] flex flex-col items-center ">
-        <Link to="/" className="w-[200px]">
-          <img src={logo} alt="" className="w-[200px] absolute top-[20vh]" />
+        <Link to="/" className="w-[120px]">
+          <img src={logo} alt="" className="w-[120px] absolute top-[20vh]" />
         </Link>
         <div className="font-[700] text-[32px] text-[#333333] mb-[20px]">Đăng nhập</div>
         <Form

@@ -556,6 +556,10 @@
   width: 60px;
 }
 
+.w-\[120px\] {
+  width: 120px;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
