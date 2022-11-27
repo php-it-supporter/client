@@ -66,7 +66,8 @@ const Header = () => {
       value: 3,
       text: 'Thành viên',
       link: '/user',
-      display: user,
+      // display: user,
+      display: true,
     },
   ];
   return (
