@@ -6,6 +6,7 @@ import AuthReducer from './AuthReducer';
 const INIT_STATE = {
   error: false,
   isLoading: false,
+  isLogin: false,
   user: JSON.parse(localStorage.getItem(USER_KEY) || '{}') || null,
 };
 

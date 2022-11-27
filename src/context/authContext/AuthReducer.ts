@@ -9,6 +9,7 @@ const AuthReducer = (state: any, action: any) => {
         user: { ...state?.user, ...payload },
         isLoading: false,
         error: false,
+        isLogin: true,
       };
     }
 
@@ -17,6 +18,7 @@ const AuthReducer = (state: any, action: any) => {
         user: null,
         isLoading: true,
         error: false,
+        isLogin: false,
       };
     }
 
@@ -25,6 +27,7 @@ const AuthReducer = (state: any, action: any) => {
         user: payload,
         isLoading: false,
         error: false,
+        isLogin: true,
       };
     }
 
@@ -33,6 +36,7 @@ const AuthReducer = (state: any, action: any) => {
         user: null,
         isLoading: false,
         error: true,
+        isLogin: false,
       };
     }
 
@@ -41,6 +45,7 @@ const AuthReducer = (state: any, action: any) => {
         user: null,
         isLoading: false,
         error: false,
+        isLogin: false,
       };
     }
 
