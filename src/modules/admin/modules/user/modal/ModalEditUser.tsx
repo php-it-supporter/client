@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { roleUser } from '../../../constant/roleUser';
 import { setAvatar } from 'src/common/utils';
 
+const KHOA = ['k10', 'k11', 'k12', 'k13', 'k14', 'k15', 'k16', 'k17'];
 interface props {
   isOpen: boolean;
   handleCancel: () => void;
@@ -70,9 +71,20 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
         <Form.Item label="Mật khẩu" name="password">
           <Input.Password />
         </Form.Item>
-
-        <Form.Item label="Khóa" name="age">
+        <Form.Item label="Số điện thoại" name="phone" labelAlign="left">
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Khóa"
+          name="age"
+          labelAlign="left"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
+          <Select>
+            {KHOA?.map((item: any) => (
+              <Select.Option value={item}>{item}</Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item label="Ngành học" name="major">

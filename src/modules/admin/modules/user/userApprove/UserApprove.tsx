@@ -174,12 +174,16 @@ const UserApprove = () => {
       }
       return form.getFieldsValue();
     };
-    let newObj = formSubmit(form);
-    console.log({ newObj: newObj });
+    // let newObj = formSubmit(form);
+    // console.log({ newObj: newObj });
     const formData = new FormData();
-    for (const key in newObj) {
-      if (key === 'avatar') formData.append(key, newObj[key]?.fileList[0]?.originFileObj);
-      else formData.append(key, newObj[key]);
+    console.log('first', formSubmit(form));
+    for (const key in formSubmit(form)) {
+      if (formSubmit(form).avatar !== 'undefined') {
+        if (key === 'avatar')
+          formData.append(key, formSubmit(form)[key]?.fileList[0]?.originFileObj);
+        else formData.append(key, formSubmit(form)[key]);
+      } else formData.append(key, formSubmit(form)[key]);
     }
     try {
       const res = await editUser(formData, id);

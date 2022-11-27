@@ -2,6 +2,7 @@ import { Form, Input, Modal, Select, Upload } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 
+const KHOA = ['k10', 'k11', 'k12', 'k13', 'k14', 'k15', 'k16', 'k17'];
 interface props {
   isOpen: boolean;
   handleCancel: () => void;
@@ -53,8 +54,17 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
         <Form.Item label="Số điện thoại" name="phone">
           <Input />
         </Form.Item>
-        <Form.Item label="Khóa" name="age">
-          <Input />
+        <Form.Item
+          label="Khóa"
+          name="age"
+          labelAlign="left"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
+          <Select>
+            {KHOA?.map((item: any) => (
+              <Select.Option value={item}>{item}</Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item label="Ngành học" name="major">
           <Select>
