@@ -79,6 +79,7 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
             <Select.Option value="r1">{roleUser.r1}</Select.Option>
             <Select.Option value="r2">{roleUser.r2}</Select.Option>
             <Select.Option value="r3">{roleUser.r3}</Select.Option>
+            <Select.Option value="r4">{roleUser.r4}</Select.Option>
           </Select>
         </Form.Item>
 

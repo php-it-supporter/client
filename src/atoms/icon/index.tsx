@@ -14,6 +14,7 @@ import { ReactComponent as slide } from './svg/slide.svg';
 import { ReactComponent as time } from './svg/time.svg';
 import { ReactComponent as home } from './svg/home.svg';
 import { ReactComponent as infor } from './svg/infor.svg';
+import { ReactComponent as money } from './svg/money.svg';
 
 interface iconProps {
   name: string;
@@ -38,6 +39,7 @@ const icons: any = {
   time: time,
   home: home,
   infor: infor,
+  money: money,
 };
 
 const Icon = ({ name, width = 20, height = width, className }: iconProps) => {

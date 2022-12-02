@@ -2,9 +2,10 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleOutlined,
+  MoneyCollectOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Input, Modal, Table, Tooltip } from 'antd';
+import { Button, Checkbox, Input, Modal, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -22,7 +23,8 @@ import LayoutFull from '../../../components/LayoutFull';
 import { roleUser, valueRole } from '../../../constant/roleUser';
 import ModalAddUser from '../modal/ModalAddUser';
 import ModalEditUser from '../modal/ModalEditUser';
-
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import ModalAddFund from '../modal/ModalAddFund';
 interface DataType {
   key: React.Key;
   name: React.ReactNode;
@@ -36,6 +38,7 @@ const UserApprove = () => {
   const { user } = useContext(AuthContext);
   const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false);
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
+  const [isOpenModalFund, setIsOpenModalFund] = useState<boolean>(false);
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [userEdit, setUserEdit] = useState(null);
@@ -53,18 +56,21 @@ const UserApprove = () => {
   };
 
   const showModal = (name: string) => {
-    if (name === 'add') setIsOpenModalAdd(true);
-    else setIsOpenModalEdit(true);
+    if (name === 'add') return setIsOpenModalAdd(true);
+    if (name === 'edit') return setIsOpenModalEdit(true);
+    return setIsOpenModalFund(true);
   };
 
   const handleOk = (name: string) => {
-    if (name === 'add') setIsOpenModalAdd(false);
-    else setIsOpenModalEdit(false);
+    if (name === 'add') return setIsOpenModalAdd(false);
+    if (name === 'edit') return setIsOpenModalEdit(false);
+    return setIsOpenModalFund(false);
   };
 
   const handleCancel = (name: string) => {
-    if (name === 'add') setIsOpenModalAdd(false);
-    else setIsOpenModalEdit(false);
+    if (name === 'add') return setIsOpenModalAdd(false);
+    if (name === 'edit') return setIsOpenModalEdit(false);
+    return setIsOpenModalFund(false);
   };
 
   const fetchDataUser = async () => {
@@ -103,6 +109,7 @@ const UserApprove = () => {
         valueRole: roleUser[item.role],
         majorName: item?.major?.name,
         major: item?.major?.id,
+        fund: item.fund ? item.fund : 0,
         formatCreated_at: created_at ? new Date(created_at)?.toLocaleDateString('en-US') : '',
       });
     });
@@ -209,6 +216,19 @@ const UserApprove = () => {
     }
   };
 
+  const onSaveFund = async (id: any, key: any) => {
+    try {
+      const res = await editUser({ ...user, fund: key }, id);
+      if (res) {
+        toast.success('Đã nộp tiền');
+        fetchDataUser();
+        handleOk('fund');
+      }
+    } catch (error) {
+      toast.error('Nộp tiền không thành công');
+    }
+  };
+
   const columns: ColumnsType<DataType> = [
     {
       title: 'Họ và tên',
@@ -255,12 +275,28 @@ const UserApprove = () => {
       width: 150,
     },
     {
+      title: 'Tiền quỹ',
+      dataIndex: 'fund',
+      key: 'fund',
+      width: 150,
+    },
+    {
       title: 'Hành động',
       key: 'operation',
       fixed: 'right',
       width: 100,
       render: (item) => (
         <div className="flex gap-[12px]">
+          <Tooltip title="Nộp quỹ">
+            <Button
+              shape="circle"
+              icon={<MoneyCollectOutlined />}
+              onClick={() => {
+                setUserEdit(item);
+                showModal('fund');
+              }}
+            />
+          </Tooltip>
           <Tooltip title="Sửa">
             <Button
               shape="circle"
@@ -332,6 +368,12 @@ const UserApprove = () => {
         user={userEdit}
         handleEditUser={handleEditUser}
         listMajors={listMajors}
+      />
+      <ModalAddFund
+        isOpen={isOpenModalFund}
+        handleCancel={() => handleCancel('fund')}
+        onSave={onSaveFund}
+        user={userEdit}
       />
     </>
   ) : (

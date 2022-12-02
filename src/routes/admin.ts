@@ -7,6 +7,7 @@ import eventManagerModule from 'src/modules/admin/modules/post/eventsManager';
 import categoryManagerModule from 'src/modules/admin/modules/category';
 import formCreateModule from 'src/modules/admin/modules/post/formCreate';
 import slideManagerModule from 'src/modules/admin/modules/slide';
+import fundManagerModule from 'src/modules/admin/modules/fund';
 
 export const AdminRouter = [
   userPendingModule,
@@ -18,4 +19,5 @@ export const AdminRouter = [
   NewDetailModule,
   categoryManagerModule,
   slideManagerModule,
+  fundManagerModule,
 ];

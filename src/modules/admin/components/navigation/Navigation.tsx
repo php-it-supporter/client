@@ -63,6 +63,12 @@ const Navigation = () => {
           text: 'Quản lý slide',
           link: '/admin/slides',
         },
+        {
+          value: 2,
+          icon: 'money',
+          text: 'Quản lý quỹ',
+          link: '/admin/fund-manager',
+        },
       ],
     },
   ];

@@ -40,6 +40,8 @@ export const categoryApis = {
 
 export const postApis = {
   findAll: (params = {}) => axios.get(`${END_POINT}/posts`, { params }),
+  findAllPending: (params = {}) => axios.get(`${END_POINT}/posts/waiting`, { params }),
+  approveNews: (param: any) => axios.patch(`${END_POINT}/posts/active/${param}`),
   findOne: (id: number) => axios.get(`${END_POINT}/posts/${id}`),
   create: (body: any) =>
     axios.post(`${END_POINT}/posts`, body, {
