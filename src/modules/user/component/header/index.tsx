@@ -40,6 +40,18 @@ const Header = () => {
         },
         ...arr,
       ];
+    if (user.role === valueRole.COLLABORATOR)
+      return [
+        {
+          value: 0,
+          icon: 'slide',
+          label: 'Trang quản lý',
+          onClick: async () => {
+            navigate('/admin/news-manager');
+          },
+        },
+        ...arr,
+      ];
     return arr;
   };
 
@@ -68,6 +80,13 @@ const Header = () => {
       link: '/user',
       // display: user,
       display: true,
+    },
+    {
+      value: 4,
+      text: 'Tạo bài viết',
+      link: '/create-post',
+      display: isLogin,
+      // display: true,
     },
   ];
   return (

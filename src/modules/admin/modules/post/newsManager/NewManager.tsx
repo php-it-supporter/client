@@ -10,7 +10,10 @@ import PostPending from './PostPending';
 const NewManager = () => {
   const { user } = useContext(AuthContext);
 
-  const isRoleValid = () => user?.role === valueRole.ADMIN || user?.role === valueRole.CADRES;
+  const isRoleValid = () =>
+    user?.role === valueRole.ADMIN ||
+    user?.role === valueRole.CADRES ||
+    user?.role === valueRole.COLLABORATOR;
 
   return isRoleValid() ? (
     <>
