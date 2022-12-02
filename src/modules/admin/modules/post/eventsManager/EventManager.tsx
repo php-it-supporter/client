@@ -67,7 +67,7 @@ const EventManager = () => {
               size="large"
               onClick={() => navigate('/admin/form-create?type=1')}
             >
-              Tạo tin tức
+              Tạo sự kiện
             </Button>
           </div>
         </div>
