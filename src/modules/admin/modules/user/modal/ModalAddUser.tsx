@@ -9,27 +9,33 @@ interface props {
   handleCancel: () => void;
   onSave: (formData: any, form: any) => void;
   listMajors: any;
+  listDepartments: any;
 }
 
-const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
+const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors, listDepartments }: props) => {
   const [form] = Form.useForm();
 
+  const handleSubmit = () => {
+    const formData = new FormData();
+    for (const key in form.getFieldsValue()) {
+      if (form.getFieldsValue()[key] !== undefined && form.getFieldsValue()[key] !== null) {
+        if (key === 'avatar')
+          formData.append(key, form.getFieldsValue()[key]?.fileList[0]?.originFileObj);
+        else formData.append(key, form.getFieldsValue()[key]);
+      }
+    }
+    onSave(formData, form);
+  };
+
   return (
-    <Modal
-      title="Thêm thành viên"
-      open={isOpen}
-      onOk={() => {
-        const formData = new FormData();
-        for (const key in form.getFieldsValue()) {
-          if (key === 'avatar')
-            formData.append(key, form.getFieldsValue()[key]?.fileList[0]?.originFileObj);
-          else formData.append(key, form.getFieldsValue()[key]);
-        }
-        onSave(formData, form);
-      }}
-      onCancel={handleCancel}
-    >
-      <Form labelCol={{ span: 6 }} wrapperCol={{ span: 14 }} labelAlign="left" form={form}>
+    <Modal title="Thêm thành viên" open={isOpen} onOk={form.submit} onCancel={handleCancel}>
+      <Form
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 14 }}
+        labelAlign="left"
+        form={form}
+        onFinish={handleSubmit}
+      >
         <Form.Item
           label="Họ và tên"
           name="fullName"
@@ -67,9 +73,24 @@ const ModalAddUser = ({ isOpen, handleCancel, onSave, listMajors }: props) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Ngành học" name="major">
+        <Form.Item
+          label="Ngành học"
+          name="major"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
           <Select>
             {listMajors.current.map((item: any) => (
+              <Select.Option value={item.id}>{item.name}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Thuộc ban"
+          name="department"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
+          <Select>
+            {listDepartments.map((item: any) => (
               <Select.Option value={item.id}>{item.name}</Select.Option>
             ))}
           </Select>

@@ -77,6 +77,12 @@ const Navigation = () => {
           text: 'Quản lý quỹ',
           link: '/admin/fund-manager',
         },
+        {
+          value: 2,
+          icon: 'slide',
+          text: 'Quản lý ban',
+          link: '/admin/department-manager',
+        },
       ],
     },
   ];

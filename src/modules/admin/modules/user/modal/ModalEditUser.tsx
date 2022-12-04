@@ -12,9 +12,17 @@ interface props {
   user: any;
   handleEditUser: (form: any, id: any) => void;
   listMajors: any;
+  listDepartments: any;
 }
 
-const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors }: props) => {
+const ModalEditUser = ({
+  isOpen,
+  handleCancel,
+  user,
+  handleEditUser,
+  listMajors,
+  listDepartments,
+}: props) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -25,9 +33,7 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
     <Modal
       title="Sửa thông tin thành viên"
       open={isOpen}
-      onOk={() => {
-        handleEditUser(form, user.id);
-      }}
+      onOk={form.submit}
       onCancel={handleCancel}
     >
       <div className="flex justify-between bg-white items-center p-[12px] border border-solid border-[#CAD8E6] rounded-[4px] mb-[16px] px-[16px]">
@@ -60,6 +66,7 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
         labelAlign="left"
         className="px-[20px]"
         form={form}
+        onFinish={() => handleEditUser(form, user.id)}
       >
         <Form.Item label="Họ và tên" name="fullName">
           <Input />
@@ -87,9 +94,24 @@ const ModalEditUser = ({ isOpen, handleCancel, user, handleEditUser, listMajors 
           </Select>
         </Form.Item>
 
-        <Form.Item label="Ngành học" name="major">
+        <Form.Item
+          label="Ngành học"
+          name="major"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
           <Select>
             {listMajors.current.map((item: any) => (
+              <Select.Option value={item.id}>{item.name}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Thuộc ban"
+          name="department"
+          rules={[{ required: true, message: 'Không được để trống!' }]}
+        >
+          <Select>
+            {listDepartments.map((item: any) => (
               <Select.Option value={item.id}>{item.name}</Select.Option>
             ))}
           </Select>

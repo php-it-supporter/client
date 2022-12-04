@@ -5,7 +5,7 @@ import {
   MoneyCollectOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Checkbox, Input, Modal, Table, Tooltip } from 'antd';
+import { Button, Checkbox, Input, Modal, Select, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { replace, searchMember, setAvatar } from 'src/common/utils';
 import { AuthContext } from 'src/context/authContext/AuthContext';
 import {
   addUser,
+  departmentApis,
   editUser,
   getAllMajor,
   getAllUserApprove,
@@ -44,12 +45,18 @@ const UserApprove = () => {
   const [userEdit, setUserEdit] = useState(null);
   const { confirm } = Modal;
   const listMajors = useRef([]);
+  const [listDepartments, setListDepartments] = useState([]);
+
+  const [departmentSelected, setDepartmentSelected] = useState(0);
   // console.log(user);
 
-  const fetchAllMajors = async () => {
+  const fetchAnotherData = async () => {
     try {
       const res = await getAllMajor();
       if (res) listMajors.current = res.data.data;
+
+      const res2 = await departmentApis.findAll();
+      if (res2) setListDepartments(res2.data.data);
     } catch (error) {
       toast.error('Kết nối bị lỗi');
     }
@@ -83,7 +90,7 @@ const UserApprove = () => {
   };
 
   useEffect(() => {
-    fetchAllMajors();
+    fetchAnotherData();
     fetchDataUser();
   }, []);
 
@@ -109,6 +116,8 @@ const UserApprove = () => {
         valueRole: roleUser[item.role],
         majorName: item?.major?.name,
         major: item?.major?.id,
+        departmentName: item?.department?.name,
+        department: item?.department?.id,
         fund: item.fund ? Number(item.fund).toLocaleString('vi-VN') : 0,
         formatCreated_at: created_at ? new Date(created_at)?.toLocaleDateString('en-US') : '',
       });
@@ -137,7 +146,11 @@ const UserApprove = () => {
   };
 
   const resultSearchUser = () => {
-    return data.filter((item: any) => searchMember(replace(item.fullName), replace(keyword)));
+    return data.filter(
+      (item: any) =>
+        searchMember(replace(item.fullName), replace(keyword)) &&
+        (departmentSelected !== 0 ? item.department?.id === departmentSelected : true)
+    );
   };
 
   const onSave = async (formData: any, form: any) => {
@@ -167,7 +180,7 @@ const UserApprove = () => {
           });
         }
       } catch (error) {
-        toast.error('Tên tài khoản đã tồn tại');
+        toast.error('Có lỗi xảy ra');
       }
     }
   };
@@ -184,13 +197,13 @@ const UserApprove = () => {
     // let newObj = formSubmit(form);
     // console.log({ newObj: newObj });
     const formData = new FormData();
-    console.log('first', formSubmit(form));
+
     for (const key in formSubmit(form)) {
-      if (formSubmit(form).avatar !== 'undefined') {
-        if (key === 'avatar')
+      if (formSubmit(form)[key] !== undefined && formSubmit(form)[key] !== null) {
+        if (key === 'avatar' && formSubmit(form).fileList)
           formData.append(key, formSubmit(form)[key]?.fileList[0]?.originFileObj);
         else formData.append(key, formSubmit(form)[key]);
-      } else formData.append(key, formSubmit(form)[key]);
+      }
     }
     try {
       const res = await editUser(formData, id);
@@ -277,6 +290,12 @@ const UserApprove = () => {
       width: 150,
     },
     {
+      title: 'Ban',
+      dataIndex: 'departmentName',
+      key: '2',
+      width: 150,
+    },
+    {
       title: 'Tiền quỹ',
       dataIndex: 'fund',
       key: 'fund',
@@ -338,12 +357,28 @@ const UserApprove = () => {
       <LayoutFull>
         <div className="mx-[16px] my-[8px]">
           <div className="w-full flex justify-between mb-[10px]">
-            <Input
-              placeholder="Nhập tên thành viên"
-              className="w-[25%]"
-              onChange={handleSearchUser}
-            />
-            ;
+            <div className="flex items-center">
+              <Input
+                placeholder="Nhập tên thành viên"
+                className="w-[200px]"
+                onChange={handleSearchUser}
+              />
+
+              <div className="mx-4 flex items-center">
+                <span>Ban: </span>
+
+                <Select
+                  className="w-[180px] ml-2"
+                  defaultValue={departmentSelected}
+                  onChange={(value: number) => setDepartmentSelected(value)}
+                >
+                  {[{ id: 0, name: 'Tất cả' }, ...listDepartments].map((item: any) => (
+                    <Select.Option value={item.id}>{item.name}</Select.Option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+
             <Button
               type="primary"
               icon={<PlusOutlined />}
@@ -363,6 +398,7 @@ const UserApprove = () => {
         handleCancel={() => handleCancel('add')}
         onSave={onSave}
         listMajors={listMajors}
+        listDepartments={listDepartments}
       />
       <ModalEditUser
         isOpen={isOpenModalEdit}
@@ -370,6 +406,7 @@ const UserApprove = () => {
         user={userEdit}
         handleEditUser={handleEditUser}
         listMajors={listMajors}
+        listDepartments={listDepartments}
       />
       <ModalAddFund
         isOpen={isOpenModalFund}

@@ -69,3 +69,10 @@ export const fundApis = {
   create: (body: any) => axios.post(`${END_POINT}/financials`, body),
   update: (body: any, id: number) => axios.put(`${END_POINT}/financials/${id}`, body),
 };
+
+export const departmentApis = {
+  findAll: (params = {}) => axios.get(`${END_POINT}/departments`, { params }),
+  create: (body: any) => axios.post(`${END_POINT}/departments`, body),
+  update: (body: any, id: number) => axios.put(`${END_POINT}/departments/${id}`, body),
+  remove: (id: number) => axios.delete(`${END_POINT}/departments/${id}`),
+};
