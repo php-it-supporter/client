@@ -67,10 +67,5 @@ export const slideApis = {
 export const fundApis = {
   findAll: (params = {}) => axios.get(`${END_POINT}/financials`, { params }),
   create: (body: any) => axios.post(`${END_POINT}/financials`, body),
-  update: (body: any, id: number) =>
-    axios.put(`${END_POINT}/financials/${id}`, body, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }),
+  update: (body: any, id: number) => axios.put(`${END_POINT}/financials/${id}`, body),
 };
