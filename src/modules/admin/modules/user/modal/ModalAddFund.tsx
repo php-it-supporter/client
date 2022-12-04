@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 interface props {
   isOpen: boolean;
   handleCancel: () => void;
-  onSave: (id: any, key: any) => void;
+  onSave: (id: any, key: any, cb: () => void) => void;
   user: any;
 }
 
@@ -18,7 +18,7 @@ const ModalAddFund = ({ isOpen, handleCancel, onSave, user }: props) => {
     <Modal
       title="Tiền quỹ"
       open={isOpen}
-      onOk={() => onSave(user?.id, keyword)}
+      onOk={() => onSave(user?.id, keyword, () => setKeyword(''))}
       onCancel={handleCancel}
     >
       <div>Số tiền: </div>

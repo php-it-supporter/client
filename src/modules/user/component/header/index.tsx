@@ -84,7 +84,7 @@ const Header = () => {
     {
       value: 4,
       text: 'Tạo bài viết',
-      link: '/create-post',
+      link: '/create-news',
       display: isLogin,
       // display: true,
     },

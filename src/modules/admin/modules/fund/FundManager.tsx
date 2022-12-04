@@ -12,7 +12,7 @@ import { valueRole } from '../../constant/roleUser';
 import type { ColumnsType } from 'antd/es/table';
 import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAllMajor } from 'src/apis/admin';
+import { fundApis, getAllMajor, getAllUserApprove } from 'src/apis/admin';
 import { replace, searchMember } from 'src/common/utils';
 import confirm from 'antd/lib/modal/confirm';
 interface DataType {
@@ -26,17 +26,19 @@ const FundManager = () => {
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
   const [majorEdit, setMajorEdit] = useState<any>({});
   const [data, setData] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [form] = Form.useForm();
   const [formEdit] = Form.useForm();
 
-  const destroyAll = () => {
-    Modal.destroyAll();
-  };
+  useEffect(() => {
+    console.log({ majorEdit });
+    formEdit.setFieldsValue(majorEdit);
+  }, [majorEdit]);
 
   const fetchAllMajors = async () => {
     try {
-      const res = await getAllMajor();
+      const res = await fundApis.findAll();
       if (res) {
         setData(res.data.data);
       }
@@ -45,9 +47,31 @@ const FundManager = () => {
     }
   };
 
+  const fetchDataUser = async () => {
+    try {
+      const res = await getAllUserApprove();
+      if (res) setDataUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchAllMajors();
+    fetchDataUser();
   }, []);
+
+  const totalMoney = () => {
+    const totalPaid = data
+      .filter((item: any) => item.totalPaid)
+      .reduce((total: number, item: any) => total + Number(item.totalPaid), 0);
+    console.log({ totalPaid });
+    return (
+      dataUser
+        .filter((item: any) => item.fund)
+        .reduce((total: number, item: any) => total + Number(item.fund), 0) - totalPaid
+    );
+  };
 
   const showModal = () => {
     setIsOpenModalAdd(true);
@@ -65,7 +89,7 @@ const FundManager = () => {
   };
 
   const resultSearchMajor = () => {
-    return data.filter((item: any) => searchMember(replace(item.name), replace(keyword)));
+    return data.filter((item: any) => searchMember(replace(item.event), replace(keyword)));
   };
 
   const returnContentTable = () => {
@@ -75,11 +99,42 @@ const FundManager = () => {
         ...item,
         index: index + 1,
         key: item.id,
+        event: item.event,
+        totalPaidTable: Number(item.totalPaid).toLocaleString('vi-VN'),
       });
     });
 
     return newArray;
   };
+
+  const handleAddMajor = async () => {
+    try {
+      const res = await fundApis.create(form.getFieldsValue());
+      if (res) {
+        toast.success('Thêm chi tiêu thành công');
+        fetchAllMajors();
+        handleOk();
+      }
+    } catch (error) {
+      toast.error('Thêm chi tiêu thất bại');
+    }
+  };
+
+  const handleEditMajor = async () => {
+    console.log({ majorEdit });
+    try {
+      const res = await fundApis.update(formEdit.getFieldsValue(), majorEdit.id);
+      if (res) {
+        toast.success('Sửa thành công');
+        fetchAllMajors();
+        setIsOpenModalEdit(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Sửa thất bại');
+    }
+  };
+
   const columns: ColumnsType<DataType> = [
     {
       title: 'STT',
@@ -90,8 +145,14 @@ const FundManager = () => {
     },
     {
       title: 'Tên khoản chi tiêu',
-      dataIndex: 'name',
-      key: 'major',
+      dataIndex: 'event',
+      key: 'event',
+      fixed: 'left',
+    },
+    {
+      title: 'Số tiền (VNĐ)',
+      dataIndex: 'totalPaidTable',
+      key: 'totalPaid',
       fixed: 'left',
     },
 
@@ -113,25 +174,6 @@ const FundManager = () => {
                 }}
               />
             </Tooltip>
-            <Tooltip title="Xóa">
-              <Button
-                danger
-                shape="circle"
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  confirm({
-                    icon: <ExclamationCircleOutlined />,
-                    content: <Button onClick={destroyAll}>Bạn có muốn xóa ngành này?</Button>,
-                    onOk() {
-                      //   handleDeleteMajor(item.id);
-                    },
-                    onCancel() {
-                      console.log('Cancel');
-                    },
-                  });
-                }}
-              />
-            </Tooltip>
           </div>
         );
       },
@@ -143,10 +185,18 @@ const FundManager = () => {
       <LayoutFull>
         <div className="mx-[16px] my-[8px]">
           <div className="w-full flex justify-between mb-[10px]">
-            <Input placeholder="Nhập tên ngành" className="w-[25%]" onChange={handleSearchMajor} />;
+            <Input
+              placeholder="Nhập tên chi tiêu"
+              className="w-[25%]"
+              onChange={handleSearchMajor}
+            />
+            ;
             <Button type="primary" icon={<PlusOutlined />} size="large" onClick={() => showModal()}>
               Thêm chi tiêu
             </Button>
+          </div>
+          <div className="text-right font-[700] leading-[20px] text-[18px] py-[20px]">
+            Tổng tiền: {totalMoney().toLocaleString('vi-VN')} VNĐ
           </div>
           <div className="h-[500px]">
             <Table columns={columns} dataSource={returnContentTable()} />
@@ -154,29 +204,35 @@ const FundManager = () => {
         </div>
       </LayoutFull>
       <Modal
-        title="Thêm chuyên ngành"
+        title="Thêm chi tiêu"
         open={isOpenModalAdd}
         onOk={() => {
-          //   handleAddMajor();
+          handleAddMajor();
         }}
         onCancel={handleCancel}
       >
         <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} labelAlign="left" form={form}>
-          <Form.Item label="Tên chuyên ngành" name="name">
+          <Form.Item label="Tên sự kiện" name="event">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Số tiền" name="totalPaid">
             <Input />
           </Form.Item>
         </Form>
       </Modal>
       <Modal
-        title="Sửa chuyên ngành"
+        title="Sửa sự kiện"
         open={isOpenModalEdit}
         onOk={() => {
-          //   handleEditMajor();
+          handleEditMajor();
         }}
         onCancel={() => setIsOpenModalEdit(false)}
       >
         <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} labelAlign="left" form={formEdit}>
-          <Form.Item label="Tên chuyên ngành" name="name">
+          <Form.Item label="Tên sự kiện" name="event">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Số tiền" name="totalPaid">
             <Input />
           </Form.Item>
         </Form>

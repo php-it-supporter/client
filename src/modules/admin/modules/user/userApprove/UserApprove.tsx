@@ -109,7 +109,7 @@ const UserApprove = () => {
         valueRole: roleUser[item.role],
         majorName: item?.major?.name,
         major: item?.major?.id,
-        fund: item.fund ? item.fund : 0,
+        fund: item.fund ? Number(item.fund).toLocaleString('vi-VN') : 0,
         formatCreated_at: created_at ? new Date(created_at)?.toLocaleDateString('en-US') : '',
       });
     });
@@ -216,12 +216,14 @@ const UserApprove = () => {
     }
   };
 
-  const onSaveFund = async (id: any, key: any) => {
+  const onSaveFund = async (id: any, key: any, cb: () => void) => {
+    console.log(id);
     try {
-      const res = await editUser({ ...user, fund: key }, id);
+      const res = await editUser({ fund: key }, id);
       if (res) {
         toast.success('Đã nộp tiền');
         fetchDataUser();
+        cb();
         handleOk('fund');
       }
     } catch (error) {
