@@ -5,7 +5,7 @@ import {
   EyeOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Input, Modal } from 'antd';
+import { Button, Input, Modal, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postApis } from 'src/apis/admin';
@@ -19,6 +19,8 @@ const PostApprover = () => {
   const [posts, setPosts] = useState([]);
   const [postSelected, setPostSelected] = useState<number>(0);
 
+  const [postTypeFilter, setPostTypeFilter] = useState<any>(0);
+
   useEffect(() => {
     if (reload) {
       (async () => {
@@ -31,8 +33,10 @@ const PostApprover = () => {
   }, [reload]);
 
   const resultSearchUser = () => {
-    return posts.filter((item: any) =>
-      searchMember(replace(item.author.fullName), replace(keyword))
+    return posts.filter(
+      (item: any) =>
+        searchMember(replace(item.author.fullName), replace(keyword)) &&
+        (postTypeFilter === 0 || item.author.role === postTypeFilter)
     );
   };
 
@@ -52,11 +56,31 @@ const PostApprover = () => {
     <div>
       <div className="mx-[16px] mt-[10px]">
         <div className="w-full flex justify-between mb-[10px]">
-          <Input
-            placeholder="Nhập tên tác giả cần tìm kiếm"
-            className="w-[25%]"
-            onChange={handleSearchUser}
-          />
+          <div className="flex items-center">
+            <Input
+              placeholder="Nhập tên tác giả cần tìm kiếm"
+              className="w-[200px]"
+              onChange={handleSearchUser}
+            />
+
+            <div className="mx-4 flex items-center">
+              <span>Bài viết: </span>
+
+              <Select
+                className="w-[120px] ml-2"
+                defaultValue={postTypeFilter}
+                onChange={(value: number) => setPostTypeFilter(value)}
+              >
+                {[
+                  { id: 0, name: 'Tất cả' },
+                  { id: 'r4', name: 'Thành viên' },
+                ].map((item: any) => (
+                  <Select.Option value={item.id}>{item.name}</Select.Option>
+                ))}
+              </Select>
+            </div>
+          </div>
+
           <Button
             type="primary"
             icon={<PlusOutlined />}

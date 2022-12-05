@@ -46,6 +46,7 @@ const UserApprove = () => {
   const { confirm } = Modal;
   const listMajors = useRef([]);
   const [listDepartments, setListDepartments] = useState([]);
+  const [isPaid, setIsPaid] = useState(false);
 
   const [departmentSelected, setDepartmentSelected] = useState(0);
   // console.log(user);
@@ -149,7 +150,8 @@ const UserApprove = () => {
     return data.filter(
       (item: any) =>
         searchMember(replace(item.fullName), replace(keyword)) &&
-        (departmentSelected !== 0 ? item.department?.id === departmentSelected : true)
+        (departmentSelected === 0 || item.department?.id === departmentSelected) &&
+        (isPaid === false || +item.fund == 0)
     );
   };
 
@@ -377,6 +379,8 @@ const UserApprove = () => {
                   ))}
                 </Select>
               </div>
+
+              <Checkbox onChange={(e: any) => setIsPaid(e.target.checked)}>Chưa đóng quỹ</Checkbox>
             </div>
 
             <Button

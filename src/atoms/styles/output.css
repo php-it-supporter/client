@@ -265,6 +265,11 @@
   margin-right: 1rem;
 }
 
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 .mb-\[24px\] {
   margin-bottom: 24px;
 }
@@ -583,6 +588,10 @@
 
 .w-\[180px\] {
   width: 180px;
+}
+
+.w-\[160px\] {
+  width: 160px;
 }
 
 .flex-1 {
