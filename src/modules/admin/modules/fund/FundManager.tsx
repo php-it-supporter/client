@@ -3,6 +3,7 @@ import {
   ExclamationCircleOutlined,
   PlusOutlined,
   EditOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Table, Tooltip } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
@@ -24,6 +25,7 @@ const FundManager = () => {
   const { user } = useContext(AuthContext);
   const [isOpenModalAdd, setIsOpenModalAdd] = useState<boolean>(false);
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
+  const [isOpenModalDetail, setIsOpenModalDetail] = useState<boolean>(false);
   const [majorEdit, setMajorEdit] = useState<any>({});
   const [data, setData] = useState([]);
   const [dataUser, setDataUser] = useState([]);
@@ -76,6 +78,7 @@ const FundManager = () => {
   const showModal = () => {
     setIsOpenModalAdd(true);
   };
+
   const handleSearchMajor = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
@@ -100,7 +103,6 @@ const FundManager = () => {
         index: index + 1,
         key: item.id,
         event: item.event,
-        description: item.desc,
         totalPaidTable: Number(item.totalPaid).toLocaleString('vi-VN'),
       });
     });
@@ -122,7 +124,6 @@ const FundManager = () => {
   };
 
   const handleEditMajor = async () => {
-    console.log({ majorEdit });
     try {
       const res = await fundApis.update(formEdit.getFieldsValue(), majorEdit.id);
       if (res) {
@@ -151,12 +152,6 @@ const FundManager = () => {
       fixed: 'left',
     },
     {
-      title: 'Chi tiết',
-      dataIndex: 'description',
-      key: 'description',
-      fixed: 'left',
-    },
-    {
       title: 'Số tiền (VNĐ)',
       dataIndex: 'totalPaidTable',
       key: 'totalPaid',
@@ -177,6 +172,16 @@ const FundManager = () => {
                 icon={<EditOutlined />}
                 onClick={() => {
                   setIsOpenModalEdit(true);
+                  setMajorEdit(item);
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Xem chi tiết">
+              <Button
+                shape="circle"
+                icon={<EyeOutlined />}
+                onClick={() => {
+                  setIsOpenModalDetail(true);
                   setMajorEdit(item);
                 }}
               />
@@ -245,6 +250,18 @@ const FundManager = () => {
           <Form.Item label="Số tiền" name="totalPaid">
             <Input />
           </Form.Item>
+          <Form.Item name="desc" label="Chi tiết">
+            <Input.TextArea />
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Xem chi tiết"
+        open={isOpenModalDetail}
+        onOk={() => setIsOpenModalDetail(false)}
+        onCancel={() => setIsOpenModalDetail(false)}
+      >
+        <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} labelAlign="left" form={formEdit}>
           <Form.Item name="desc" label="Chi tiết">
             <Input.TextArea />
           </Form.Item>
