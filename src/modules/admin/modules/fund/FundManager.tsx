@@ -100,6 +100,7 @@ const FundManager = () => {
         index: index + 1,
         key: item.id,
         event: item.event,
+        description: item.desc,
         totalPaidTable: Number(item.totalPaid).toLocaleString('vi-VN'),
       });
     });
@@ -147,6 +148,12 @@ const FundManager = () => {
       title: 'Tên khoản chi tiêu',
       dataIndex: 'event',
       key: 'event',
+      fixed: 'left',
+    },
+    {
+      title: 'Chi tiết',
+      dataIndex: 'description',
+      key: 'description',
       fixed: 'left',
     },
     {
@@ -218,6 +225,9 @@ const FundManager = () => {
           <Form.Item label="Số tiền" name="totalPaid">
             <Input />
           </Form.Item>
+          <Form.Item name="desc" label="Chi tiết">
+            <Input.TextArea />
+          </Form.Item>
         </Form>
       </Modal>
       <Modal
@@ -234,6 +244,9 @@ const FundManager = () => {
           </Form.Item>
           <Form.Item label="Số tiền" name="totalPaid">
             <Input />
+          </Form.Item>
+          <Form.Item name="desc" label="Chi tiết">
+            <Input.TextArea />
           </Form.Item>
         </Form>
       </Modal>

@@ -9,11 +9,18 @@ import { Link } from 'react-router-dom';
 // import process from 'process';
 import { categoryApis } from 'src/apis/admin';
 import { Editor } from 'react-draft-wysiwyg';
+import { Select } from 'antd';
 
 const NewPage = () => {
   const [reload, setReload] = useState(true);
+  const [select, setSelect] = useState<any>();
   const [posts, setPosts] = useState<any[]>([]);
   const [categories, setCategories] = useState([]);
+
+  const handleChange = (value: string) => {
+    // console.log(`selected ${value}`);
+    setSelect(value);
+  };
 
   useEffect(() => {
     if (reload) {
@@ -25,6 +32,12 @@ const NewPage = () => {
       setReload(false);
     }
   }, [reload]);
+
+  const resultSearch = () => {
+    if (!select || select === -1) return posts;
+
+    return posts.filter((it) => it.author.role === select);
+  };
 
   useEffect(() => {
     if (reload) {
@@ -55,73 +68,67 @@ const NewPage = () => {
           </div>
         </div>
         <div className="my-[20px] flex-1">
-          <div className="rounded-sm overflow-hidden bg-white shadow-sm">
-            <Link to={`/news/${posts[0]?.id}`} className="block rounded-md overflow-hidden">
-              <img
-                src={`${process.env.REACT_APP_DOMAIN}/${posts[0]?.image}`}
-                className="w-full h-96 object-cover transform hover:scale-110 transition duration-500"
-              />
-            </Link>
-            <div className="p-4 pb-5">
-              <Link to={`/news/${posts[0]?.id}`}>
-                <h2 className="block text-2xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                  {posts[0]?.title}
-                </h2>
-              </Link>
-
-              {/* <p className="text-gray-500 text-sm mt-2">{}</p> */}
-              <div className="mt-3 flex space-x-4">
-                <div className="flex text-gray-400 text-sm items-center">
-                  <span className="mr-2 text-xs">
-                    <Icon name="user-pending" width={14} />
-                  </span>
-                  {posts[0]?.author?.username}
-                </div>
-                <div className="flex text-gray-400 text-sm items-center">
-                  <span className="mr-2 text-xs">
-                    <Icon name="time" width={14} />
-                  </span>
-                  {new Date(posts[0]?.created_at)?.toLocaleDateString('en-US')}
-                </div>
-              </div>
-            </div>
+          <div className="py-[20px]">
+            <Select
+              defaultValue="Tất cả"
+              style={{ width: 240 }}
+              onChange={handleChange}
+              options={[
+                {
+                  value: -1,
+                  label: 'Tất cả',
+                },
+                {
+                  value: 'r1',
+                  label: 'Admin',
+                },
+                {
+                  value: 'r2',
+                  label: 'Cán bộ',
+                },
+                {
+                  value: 'r3',
+                  label: 'Cộng tác viên',
+                },
+                {
+                  value: 'r4',
+                  label: 'Thành viên',
+                },
+              ]}
+            />
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            {posts.map(
-              (item, index) =>
-                index !== 0 && (
-                  <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
-                    <Link to={`/news/${item.id}`} className="block rounded-md overflow-hidden">
-                      <img
-                        src={`${process.env.REACT_APP_DOMAIN}/${item?.image}`}
-                        className="w-full h-[30vh] object-cover transform hover:scale-110 transition duration-500"
-                      />
-                    </Link>
-                    <div className="mt-3">
-                      <Link to={`/news/${item.id}`}>
-                        <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto ">
-                          {item?.title}
-                        </h2>
-                      </Link>
-                      <div className="mt-2 flex space-x-3">
-                        <div className="flex text-gray-400 text-sm items-center">
-                          <span className="mr-2 text-xs">
-                            <Icon name="user-pending" width={14} />
-                          </span>
-                          {item.author?.username}
-                        </div>
-                        <div className="flex text-gray-400 text-sm items-center">
-                          <span className="mr-2 text-xs">
-                            <Icon name="time" width={14} />
-                          </span>
-                          {new Date(item?.created_at)?.toLocaleDateString('en-US')}
-                        </div>
-                      </div>
+            {resultSearch().map((item) => (
+              <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
+                <Link to={`/news/${item.id}`} className="block rounded-md overflow-hidden">
+                  <img
+                    src={`${process.env.REACT_APP_DOMAIN}/${item?.image}`}
+                    className="w-full h-[30vh] object-cover transform hover:scale-110 transition duration-500"
+                  />
+                </Link>
+                <div className="mt-3">
+                  <Link to={`/news/${item.id}`}>
+                    <h2 className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto ">
+                      {item?.title}
+                    </h2>
+                  </Link>
+                  <div className="mt-2 flex space-x-3">
+                    <div className="flex text-gray-400 text-sm items-center">
+                      <span className="mr-2 text-xs">
+                        <Icon name="user-pending" width={14} />
+                      </span>
+                      {item.author?.username}
+                    </div>
+                    <div className="flex text-gray-400 text-sm items-center">
+                      <span className="mr-2 text-xs">
+                        <Icon name="time" width={14} />
+                      </span>
+                      {new Date(item?.created_at)?.toLocaleDateString('en-US')}
                     </div>
                   </div>
-                )
-            )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <div className=" w-[calc(20%-100px)] sticky top-[10px] mr-[50px] ml-[20px] my-[20px] shadow-sm rounded-sm p-4 h-[550px]">
