@@ -1,5 +1,5 @@
 import { Input, Modal } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface props {
   isOpen: boolean;
@@ -10,7 +10,9 @@ interface props {
 
 const ModalAddFund = ({ isOpen, handleCancel, onSave, user }: props) => {
   const [keyword, setKeyword] = useState('');
-  console.log({ user });
+  useEffect(() => {
+    setKeyword('')
+  }, [isOpen])
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
@@ -22,7 +24,7 @@ const ModalAddFund = ({ isOpen, handleCancel, onSave, user }: props) => {
       onCancel={handleCancel}
     >
       <div>Số tiền: </div>
-      <Input placeholder="Nhập số tiền" onChange={onChange} />
+      <Input placeholder="Nhập số tiền" onChange={onChange} value={keyword} />
     </Modal>
   );
 };
