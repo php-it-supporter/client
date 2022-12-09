@@ -99,10 +99,11 @@ const UserApprove = () => {
 
   const returnContentTable = () => {
     const newArray: any = [];
-    resultSearchUser().map((item: any) => {
+    resultSearchUser().map((item: any, index: number) => {
       const created_at = item?.created_at;
       newArray.push({
         ...item,
+        index: index + 1,
         key: item.id,
         name: (
           <div className="flex items-center gap-[12px]">
@@ -247,6 +248,13 @@ const UserApprove = () => {
   };
 
   const columns: ColumnsType<DataType> = [
+    {
+      title: 'STT',
+      width: 20,
+      dataIndex: 'index',
+      key: 'index',
+      fixed: 'left',
+    },
     {
       title: 'Họ và tên',
       width: 200,
